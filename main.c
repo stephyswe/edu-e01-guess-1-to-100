@@ -56,7 +56,7 @@ e.x.    strcpy(player.date, getCurrentDate());
 - int handlePromptDefault(char* stringMessage, int tries) - handles prompt for default messages
 
 - int playGame - plays a game of 'Guess the number'
-- playGameScore - plays a game and saves the score
+- void playGameScore - plays a game and saves the score
 
 - void menu - playGameScore & viewLowScoreboard
 - int main - playGameScore & menu
@@ -143,7 +143,8 @@ Vill du spela igen? (Ja/Nej):
 ** Kravspecifikation - VG **
 • Programmet ska innehålla en ”low score lista”. De (max) fem LÄGSTA resultaten ska lagras i en fil. Och när man spelat en omgång ska man
     (ifall man platsar på highscore) få mata in sitt namn och sen lagrtas man på rätt plats i highscorelistan
-- Kommentar: "Vill du spela igen? (Ja/Nej):" visas efter varje spel.
+- Kommentar: Low score lista lagras i en fil - "score.txt". "score.txt" skapas om den inte finns.
+    "score.txt" innehåller de fem lägsta resultaten. "score.txt" uppdateras efter varje spel.
 
 • I menyn ska man kunna välja att se lowscore-listan. Så ska den visas upp på skärmen
 - Kommentar: I menyn kan man välja lowscore-listan med val 3. "3. Se lowscore"
@@ -248,6 +249,16 @@ void checkFileExist(FILE *file_ptr)
     int errnum;
 
     // Check if file exists
+    char there_was_error = 0;
+    char opened_in_read  = 1;
+
+     // strings
+    char answer[8];
+    char *strIntro = "Vill du skapa en ny fil (score.txt)? (Ja/Nej): ";
+    char *strYes = "Ja";
+    char *strNo = "Nej";
+
+    // Check if file exists
     if (file_ptr == NULL)
     {
         // Get error number
@@ -265,8 +276,43 @@ void checkFileExist(FILE *file_ptr)
         // Print error message
         printf("Error opening file %s \n", file_ptr);
 
-        // Exit program
-        exit(1);
+        // Ask user if they want to create a new file
+        printf("Do you want to create a new file? (Ja/Nej) \n");
+
+        // loop while answer is not "Ja" or "Nej"
+        while (scanf(" %s", &answer) == 1 && strcmp(answer, strYes) != 0) {
+             if (strcmp(answer, strYes) == 0){
+
+                // create file
+                file_ptr = fopen(FILE_SCORE, "r");
+
+                // Check if file exists. if Not set there_was_error to 1
+                if (file_ptr == NULL)
+                    there_was_error = 1;
+            }
+            else if (strcmp(answer, strNo) == 0){
+                // Exit program
+                exit(EXIT_FAILURE);
+            }
+            else{
+                printf("Felaktig inmatning. Försök igen. \n");
+        }
+        }
+
+        // Check if there was an error
+        if (there_was_error)
+        {
+            // Print error message
+            printf("Disc full or no permission\n");
+
+            // Exit program
+            exit(EXIT_FAILURE);
+        }
+
+        // Check if file was opened in read mode
+        else
+            // Print success message
+            printf("The file %s was created successfully. \n", FILE_SCORE);
     }
 }
 
@@ -511,7 +557,6 @@ Score scoreCheck(int tries)
 // Status: 'Working'
 void scoreToFile(int write_line, Player player)
 {
-
     // file pointers for the original file and temp file
     FILE *file, *temp;
 
@@ -543,7 +588,7 @@ void scoreToFile(int write_line, Player player)
     temp = fopen(temp_filename, "w");
 
     // check if either file failed to open, if either did exit with error status
-    checkFileExist(file);
+    // checkFileExist(file);
     checkFileExist(temp);
 
     // we'll keep reading the file so long as keep_reading is true
@@ -745,7 +790,7 @@ void playGameScore()
         // create player object with name and date
         Player player = playerAdd(score.points);
 
-        // add player score to scoreboard file
+        // add player score to scoreboard file according to row
         scoreToFile(score.row, player);
     }
 }
@@ -763,24 +808,30 @@ void menu()
     char *strMenu = "\n1. Spela igen \n2. Avsluta \n3. Se lowscore \nVälj: ";
     char *strError = "Fel inmatning. Försök igen.";
 
+    //  endless loop
     while (true)
     {
-        // switch case to check answer from user 
-        // and execute function accordingly to answer from user (1, 2 or 3)
-        // or error handling if answer is not 1, 2 or 3 (default)
+        // switch case to check answer from user to execute cases accordingly (1, 2 or 3)
+        // and error handling if answer is not 1, 2 or 3 (default)
         switch (handlePromptDefault(strMenu, 0))
         {
         case 1:
             // play game
             playGameScore();
+
+            // break loop
             break;
         case 2:
             // exit game
             exit(EXIT_SUCCESS);
+            
+            // break loop
             break;
         case 3:
             // view scoreboard
             viewLowScoreboard();
+
+            // break loop
             break;
         default:
             // print error message
@@ -789,6 +840,8 @@ void menu()
             // break loop
             break;
         }
+
+        // print new line
         printf("\n");
     }
 }
@@ -805,6 +858,6 @@ void main()
     // play game
     playGameScore();
 
-    // present menu with options
+    // menu with options
     menu();
 }
