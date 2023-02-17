@@ -719,7 +719,6 @@ int playGame()
     // seed random number generator
     srand(time(NULL));
     number = rand() % 100 + 1;
-    number = 50;
 
     // strings
     char *strIntro = "Gissa ett tal mellan 1 och 100. \n";
