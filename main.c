@@ -1,27 +1,22 @@
+// Include header files
 #include "prompt.h"
 #include "common.h"
 #include "file.h"
 #include "scoreinput.h"
 #include "playerinput.h"
 
+// struct files
 #include "FileData.h"
 #include "Player.h"
 #include "Score.h"
 
-// menu options
+// Define options
 #define OPTION_PLAY_AGAIN 1
 #define OPTION_EXIT 2
 #define OPTION_VIEW_SCOREBOARD 3
 
-// Info in README.me
-
 // Function: viewLowScoreboard
-// Description: View lowscoreboard
-// Parameters: None
-// Returns: None
-// Side-effects: None
-// Error-handling: None
-// Status: 'Working'
+// Description: View low scoreboard
 void viewLowScoreboard()
 {
     // Read file
@@ -40,11 +35,6 @@ void viewLowScoreboard()
 
 // Function: playGame
 // Description: Plays a game of 'Guess the number'
-// Parameters: None
-// Returns: None
-// Side-effects: None
-// Error-handling: None
-// Status: 'Working'
 int playGame()
 {
     // variables
@@ -106,11 +96,6 @@ int playGame()
 
 // Function: playGameScore
 // Description: Plays a game of 'Guess the number' and checks if score is highscore
-// Parameters: None
-// Returns: None
-// Side-effects: None
-// Error-handling: None
-// Status: 'Working'
 void playGameScore()
 {
     // play Game - return tries
@@ -132,11 +117,6 @@ void playGameScore()
 
 // Function: menu
 // Description: Menu function
-// Parameters: None
-// Returns: None
-// Side-effects: None
-// Error-handling: None
-// Status: 'Working'
 void menu()
 {
     // variables
@@ -180,11 +160,6 @@ void menu()
 
 // Function: main
 // Description: Main function
-// Parameters: None
-// Returns: None
-// Side-effects: None
-// Error-handling: None
-// Status: 'Working
 void main()
 {
     // play game

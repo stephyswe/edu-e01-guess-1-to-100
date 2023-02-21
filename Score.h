@@ -4,13 +4,8 @@
 #ifndef SCORE_H
 #define SCORE_H
 
-// Function: Struct Score
-// Description: Struct for score
-// Parameters: None
-// Returns: None
-// Side-effects: None
-// Error-handling: None
-// Status: 'Working'
+// Struct: Score
+// Description: confirm highscore and row
 typedef struct
 {
     // Score isHighScore

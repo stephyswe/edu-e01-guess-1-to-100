@@ -7,13 +7,16 @@
 #include <ctype.h>
 #include <errno.h>
 
+// struct files
 #include "FileData.h"
 #include "Player.h"
 
+// define constants
 #define FILENAME_SIZE 1024
 #define MAX_LINE 2048
 #define FILE_SCORE "scoreboard.txt"
 
+// error number
 extern int errno;
 
 void checkFileExist(FILE *file_ptr)
@@ -27,7 +30,18 @@ void checkFileExist(FILE *file_ptr)
 
     // strings
     char answer[8];
-    char *strIntro = "Vill du skapa en ny fil (score.txt)? (Ja/Nej): ";
+    char *strIntro = "Vill du skapa en ny fil (scoreboard.txt)? (Ja/Nej): ";
+
+    char *strErrorValue = "Value of errno: %d\n";
+    char *strErrorOpeningFile = "Error opening file: %s\n";
+    char *strErrorPrinted = "Error printed by perror\n";
+    char *strErrorOpening = "Error opening file: %s\n";
+    char *strErrorDisc = "Disc full or no permission\n";
+
+    char *strErrorInput = "Felaktig inmatning. Försök igen. \n";
+
+    // strings file
+    char *strFileSuccess = "The file %s was created successfully. \n";
     char *strYes = "Ja";
     char *strNo = "Nej";
 
@@ -38,19 +52,19 @@ void checkFileExist(FILE *file_ptr)
         errnum = errno;
 
         // Print error message
-        fprintf(stderr, "Value of errno: %d\n", errno);
+        fprintf(stderr, strErrorValue, errno);
 
         // Print error message
-        perror("Error printed by perror");
+        perror(strErrorPrinted);
 
         // Print error message
-        fprintf(stderr, "Error opening file: %s\n", strerror(errnum));
+        fprintf(stderr, strErrorOpeningFile, strerror(errnum));
 
         // Print error message
-        printf("Error opening file %s \n", file_ptr);
+        printf(strErrorOpening, file_ptr);
 
         // Ask user if they want to create a new file
-        printf("Do you want to create a new file? (Ja/Nej) \n");
+        printf(strIntro);
 
         // loop while answer is not "Ja" or "Nej"
         while (scanf(" %s", &answer) == 1 && strcmp(answer, strYes) != 0)
@@ -72,7 +86,7 @@ void checkFileExist(FILE *file_ptr)
             }
             else
             {
-                printf("Felaktig inmatning. Försök igen. \n");
+                printf(strErrorInput);
             }
         }
 
@@ -80,7 +94,7 @@ void checkFileExist(FILE *file_ptr)
         if (there_was_error)
         {
             // Print error message
-            printf("Disc full or no permission\n");
+            printf(strErrorDisc);
 
             // Exit program
             exit(EXIT_FAILURE);
@@ -89,17 +103,10 @@ void checkFileExist(FILE *file_ptr)
         // Check if file was opened in read mode
         else
             // Print success message
-            printf("The file %s was created successfully. \n", FILE_SCORE);
+            printf(strFileSuccess, FILE_SCORE);
     }
 }
 
-// Function: readFile
-// Description: Reads file
-// Parameters: None
-// Returns: struct FileData
-// Side-effects: None
-// Error-handling: None
-// Status: 'Working'
 FileData readFile()
 {
     // Read file
@@ -115,13 +122,6 @@ FileData readFile()
     return fdata;
 }
 
-// Function: scoreToFile
-// Description: Adds score to file
-// Parameters: int write_line, struct Player player
-// Returns: None
-// Side-effects: None
-// Error-handling: None
-// Status: 'Working'
 void scoreToFile(int write_line, Player player)
 {
     // file pointers for the original file and temp file

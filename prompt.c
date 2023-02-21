@@ -4,6 +4,9 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
+// Function: validateInput
+// Description: Validates input
+// Parameters: char *inputBuffer
 void validateInput(char *inputBuffer)
 {
     if (fgets(inputBuffer, sizeof(inputBuffer), stdin) == NULL)
@@ -13,6 +16,10 @@ void validateInput(char *inputBuffer)
     }
 }
 
+// Function: checkInteger
+// Description: Checks if input is integer
+// Parameters: char *input
+// Returns: bool
 bool checkInteger(char *input)
 {
     // variables
@@ -46,21 +53,11 @@ bool checkInteger(char *input)
 // Description: Checks if number is within range
 // Parameters: int num
 // Returns: bool
-// Side-effects: None
-// Error-handling: None
-// Status: 'Working'
 bool isWithinRange(int num, int min, int max)
 {
     return (num >= min && num <= max);
 }
 
-// Function handlePrompt
-// Description: Prompts user for input
-// Parameters: char* prompt, int tries
-// Returns: int number
-// Side-effects: None
-// Error-handling: None
-// Status: 'Working'
 int handlePrompt(const char *prompt, int tries)
 {
     // variables
@@ -100,14 +97,6 @@ int handlePrompt(const char *prompt, int tries)
     }
     return number;
 }
-
-// Function handleMenuPrompt
-// Description: Prompts user for input
-// Parameters: char* prompt, int tries
-// Returns: int number
-// Side-effects: None
-// Error-handling: None
-// Status: 'Working'
 
 int handleMenuPrompt(const char *prompt)
 {

@@ -2,16 +2,12 @@
 #include <stdbool.h>
 #include <string.h>
 
+// struct files
 #include "Player.h"
+
+// header files
 #include "common.h"
 
-// struct playerAdd
-// Description: Struct for player with date
-// Parameters: int numberOfGuesses
-// Returns: struct Player
-// Side-effects: None
-// Error-handling: None
-// Status: 'Working'
 Player playerAdd(int points)
 {
     // string

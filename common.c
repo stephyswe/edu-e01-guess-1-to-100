@@ -18,13 +18,6 @@ int getRandomNumber()
     return number;
 }
 
-// Function: getCurrentDate
-// Description: Returns the current date and time as a string
-// Parameters: None
-// Returns: char *date
-// Side-effects: None
-// Error-handling: None
-// Status: 'Working'
 char *getCurrentDate()
 {
     // Get current date and time

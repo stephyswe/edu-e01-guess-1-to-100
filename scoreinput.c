@@ -1,21 +1,15 @@
 #include <stdio.h>
 #include <stdbool.h>
 
+// struct files
 #include "Score.h"
 #include "FileData.h"
 
+// header files
 #include "file.h"
 
-// Function: scoreAdd
-// Description: Adds score
-// Parameters: int tries, int row
-// Returns: struct Score
-// Side-effects: None
-// Error-handling: None
-// Status: 'Working'
 Score scoreAdd(int row)
 {
-
     // Create score struct
     Score score;
 
@@ -29,13 +23,6 @@ Score scoreAdd(int row)
     return score;
 }
 
-// Function: scoreCheck
-// Description: Checks if score is highscore
-// Parameters: int tries
-// Returns: struct Score
-// Side-effects: None
-// Error-handling: None
-// Status: 'Working'
 Score scoreCheck(int tries)
 {
     // Create score struct

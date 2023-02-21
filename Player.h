@@ -3,13 +3,8 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
-// struct player
-// Description: Struct for player with date
-// Parameters: none
-// Returns: struct Player
-// Side-effects: None
-// Error-handling: None
-// Status: 'Working'
+// Function: Player
+// Description: date, name and points
 typedef struct
 {
     // Player date

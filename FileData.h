@@ -3,13 +3,8 @@
 #ifndef FILEDATA_H
 #define FILEDATA_H
 
-// Function: Struct FileData
-// Description: Struct for file data
-// Parameters: None
-// Returns: None
-// Side-effects: None
-// Error-handling: None
-// Status: 'Working'
+// Struct: FileData
+// Description: file pointer and file name
 typedef struct
 {
     // File data
