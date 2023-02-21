@@ -12,7 +12,7 @@
 
 #define FILENAME_SIZE 1024
 #define MAX_LINE 2048
-#define FILE_SCORE "score.txt"
+#define FILE_SCORE "scoreboard.txt"
 
 extern int errno;
 
