@@ -123,7 +123,7 @@ void playGameScore()
     if (score.isHighScore)
     {
         // create player object with name and date
-        Player player = playerAdd(score.points);
+        Player player = playerAdd(tries);
 
         // add player score to scoreboard file according to row
         scoreToFile(score.row, player);

@@ -16,9 +16,6 @@ typedef struct
     // Score isHighScore
     bool isHighScore;
 
-    // Score points
-    int points;
-
     // Score row
     int row;
 } Score;

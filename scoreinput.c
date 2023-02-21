@@ -13,7 +13,7 @@
 // Side-effects: None
 // Error-handling: None
 // Status: 'Working'
-Score scoreAdd(int tries, int row)
+Score scoreAdd(int row)
 {
 
     // Create score struct
@@ -21,9 +21,6 @@ Score scoreAdd(int tries, int row)
 
     // Set score
     score.isHighScore = true;
-
-    // Set points
-    score.points = tries;
 
     // Set row
     score.row = row;
@@ -67,7 +64,7 @@ Score scoreCheck(int tries)
         if (number > tries)
         {
             // High score found! create a new score.
-            score = scoreAdd(tries, row_line);
+            score = scoreAdd(row_line);
             break;
         }
         // add to rowline
@@ -78,7 +75,7 @@ Score scoreCheck(int tries)
     if (row_line < 6 && score.isHighScore == false)
     {
         // create a new score
-        score = scoreAdd(tries, row_line);
+        score = scoreAdd(row_line);
     }
 
     // close file
