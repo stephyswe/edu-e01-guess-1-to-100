@@ -21,6 +21,11 @@
 #define BUF_SIZE 65536
 #define FILE_SCORE "score.txt"
 
+// menu options
+#define OPTION_PLAY_AGAIN 1
+#define OPTION_EXIT 2
+#define OPTION_VIEW_SCOREBOARD 3
+
 // Info in README.me
 
 // Function: writeFile
@@ -171,46 +176,41 @@ void playGameScore()
 // Status: 'Working'
 void menu()
 {
+    // variables
+    int userChoice;
+
     // strings
     char *strMenu = "\n1. Spela igen \n2. Avsluta \n3. Se lowscore \nVälj: ";
     char *strError = "Fel inmatning. Försök igen.";
 
-    //  endless loop
-    while (true)
-    {
-        // switch case to check answer from user to execute cases accordingly (1, 2 or 3)
-        // and error handling if answer is not 1, 2 or 3 (default)
-        switch (handlePrompt(strMenu, 0))
-        {
-        case 1:
+    do {
+    // show the menu and get the user's choice
+    userChoice = handleMenuPrompt(strMenu);
+
+    // execute the chosen option
+    switch (userChoice) {
+        case OPTION_PLAY_AGAIN:
             // play game
             playGameScore();
-
-            // break loop
             break;
-        case 2:
+        case OPTION_EXIT:
             // exit game
             exit(EXIT_SUCCESS);
-            
-            // break loop
             break;
-        case 3:
+        case OPTION_VIEW_SCOREBOARD:
             // view scoreboard
             viewLowScoreboard();
-
-            // break loop
             break;
         default:
             // print error message
             fprintf(stderr, strError);
-
-            // break loop
             break;
-        }
-
-        // print new line
-        printf("\n");
     }
+
+    // print new line
+    printf("\n");
+
+    } while (userChoice != OPTION_EXIT);
 }
 
 // Function: main

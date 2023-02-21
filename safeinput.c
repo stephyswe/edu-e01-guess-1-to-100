@@ -5,6 +5,13 @@
 #include <stdbool.h>
 
 
+void validateInput(char *inputBuffer) {
+    if (fgets(inputBuffer, sizeof(inputBuffer), stdin) == NULL) {
+            printf("Error reading input\n");
+            exit(1);
+    }
+}
+
 bool checkInteger(char *input) {
     // variables
     int length = strlen(input);
@@ -37,11 +44,8 @@ bool checkInteger(char *input) {
 // Side-effects: None
 // Error-handling: None
 // Status: 'Working'
-bool isWithinRange(int num) {
-    if (num >= 1 && num <= 100)
-        return true;
-    else
-        return false; 
+bool isWithinRange(int num, int min, int max) {
+    return (num >= min && num <= max);
 }
 
 // Function handlePrompt
@@ -51,7 +55,48 @@ bool isWithinRange(int num) {
 // Side-effects: None
 // Error-handling: None
 // Status: 'Working'
-int handlePrompt(char *prompt, int tries)
+int handlePrompt(const char *prompt, int tries)
+{
+    // variables
+    int number;
+    char inputBuffer[100];
+
+    // error messages
+    const char *strErrorDefaultMsg = "Ogiltig inmatning, försök igen\n";
+    const char *strErrorNumberMsg = "Ogiltigt nummer, måste vara 1 - 100, försök igen\n";
+
+    while (true) {
+        printf(prompt, tries);
+        validateInput(inputBuffer);
+
+        int inputValue = atoi(inputBuffer);
+        const int withinRage = isWithinRange(inputValue, 1, 100);
+        bool isValidInput = checkInteger(inputBuffer) && withinRage;
+
+        if (isValidInput) {
+            number = inputValue;
+            break;
+        } else if (!checkInteger(inputBuffer)) {
+            printf(strErrorDefaultMsg);
+        } else if (withinRage) {
+            printf(strErrorDefaultMsg);
+        } else {
+            printf(strErrorNumberMsg);
+        }
+    }
+    return number;
+}
+
+// Function handleMenuPrompt
+// Description: Prompts user for input
+// Parameters: char* prompt, int tries
+// Returns: int number
+// Side-effects: None
+// Error-handling: None
+// Status: 'Working'
+
+
+int handleMenuPrompt(const char *prompt)
 {
     // variables
     int number;
@@ -59,22 +104,22 @@ int handlePrompt(char *prompt, int tries)
 
     // error messages
     char *strErrorDefaultMsg = "Ogiltig inmatning, försök igen\n";
-    char *strErrorNumberMsg = "Ogiltigt nummer, måste vara 1 - 100, försök igen\n";
+    char *strErrorNumberMsg = "Ogiltigt nummer, måste vara 1 - 3, försök igen\n";
 
     while (true) {
-        printf(prompt, tries);
-        if (fgets(inputBuffer, sizeof(inputBuffer), stdin) == NULL) {
-            printf("Error reading input\n");
-            exit(1);
-        }
-
+        printf(prompt);
+        validateInput(inputBuffer);
         int inputValue = atoi(inputBuffer);
-        bool isValidInput = checkInteger(inputBuffer) && isWithinRange(inputValue);
+        const int withinRage = isWithinRange(inputValue, 1, 3);
+
+        bool isValidInput = checkInteger(inputBuffer) && withinRage;
 
         if (isValidInput) {
             number = inputValue;
             break;
-        } else if (isWithinRange(inputValue)) {
+        } else if (!checkInteger(inputBuffer)) {
+            printf(strErrorDefaultMsg);
+        } else if (withinRage) {
             printf(strErrorDefaultMsg);
         } else {
             printf(strErrorNumberMsg);
