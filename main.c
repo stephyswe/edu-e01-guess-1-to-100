@@ -1,5 +1,5 @@
 #include "prompt.h"
-#include "date.h"
+#include "common.h"
 #include "file.h"
 #include "scoreinput.h"
 #include "playerinput.h"

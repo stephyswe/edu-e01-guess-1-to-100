@@ -3,7 +3,7 @@
 #include <string.h>
 
 #include "Player.h"
-#include "date.h"
+#include "common.h"
 
 // struct playerAdd
 // Description: Struct for player with date
