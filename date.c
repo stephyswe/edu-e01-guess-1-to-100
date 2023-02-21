@@ -1,6 +1,21 @@
 #include <stdio.h>
 #include <string.h>
 #include <time.h>
+#include <stdlib.h>
+
+int getRandomNumber() {
+    // variables
+    int number;
+
+    // Seed random number generator
+    srand(time(NULL));
+
+    // Get random number
+    number = rand() % 100 + 1;
+
+    // return number
+    return number;
+}
 
 // Function: getCurrentDate
 // Description: Returns the current date and time as a string
