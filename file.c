@@ -1,9 +1,16 @@
 #include <stdio.h>
+#include <stdbool.h>
 #include <stdlib.h>
+#include <time.h>
 #include <string.h>
+#include <math.h>
+#include <ctype.h>
 
 #include "FileData.h"
+#include "Player.h"
 
+#define FILENAME_SIZE 1024
+#define MAX_LINE 2048
 #define FILE_SCORE "score.txt"
 
 extern int errno;
@@ -101,4 +108,118 @@ FileData readFile()
 
     // Return file data
     return fdata;
+}
+
+
+// Function: scoreToFile
+// Description: Adds score to file
+// Parameters: int write_line, struct Player player
+// Returns: None
+// Side-effects: None
+// Error-handling: None
+// Status: 'Working'
+void scoreToFile(int write_line, Player player)
+{
+    // file pointers for the original file and temp file
+    FILE *file, *temp;
+
+    // store the filename and temp filename
+    char filename[FILENAME_SIZE] = FILE_SCORE;
+    char temp_filename[FILENAME_SIZE];
+
+    // buffer will store each line from the original file
+    char buffer[MAX_LINE];
+
+    // newline will store the new line of text to be written to the file
+    char newline[MAX_LINE];
+
+    // cast integer player_value to string newline
+    sprintf(newline, "%s %s %d", player.date, player.name, player.points);
+
+    // we'll make a temp file with "temp__filename" format
+    strcpy(temp_filename, "temp____");
+
+    // append the original filename to the temp filename
+    strcat(temp_filename, filename);
+
+    // flush stdin to get the \n char from the last scanf out, otherwise the
+    // below fgets will 'fail' as it will immediately encounter a newline
+    fflush(stdin);
+
+    // open the original file for reading, and the temp file for writing
+    file = fopen(filename, "r");
+    temp = fopen(temp_filename, "w");
+
+    // check if either file failed to open, if either did exit with error status
+    // checkFileExist(file);
+    checkFileExist(temp);
+
+    // we'll keep reading the file so long as keep_reading is true
+    bool keep_reading = true;
+
+    // will keep track of the current line number we are reading from the file
+    int current_line = 1;
+
+    do
+    {
+        // read the next line of the file into the buffer
+        fgets(buffer, MAX_LINE, file);
+        // if we've reached the end of the file, stop reading
+        if (feof(file) || current_line == 5)
+        {
+
+            // Scenario: File Empty
+
+            // go to the end of the file
+            fseek(file, 0, SEEK_END); // goto end of file
+
+            // if the file is empty, write the new line to the file
+            if (ftell(file) == 0)
+            {
+                fputs(newline, temp);
+                fputs("\n", temp);
+            }
+
+            // Scenario: Line Empty
+            else if (current_line == write_line)
+            {
+                fputs(newline, temp);
+                fputs("\n", temp);
+            }
+
+            // Scenario: Line is greater than current line
+            else if (write_line > current_line)
+            {
+                fputs(buffer, temp);
+                fputs("\n", temp);
+                fputs(newline, temp);
+            }
+
+            // stop reading
+            keep_reading = false;
+        }
+
+        // scenario: write_line is same as current_line
+        else if (current_line == write_line)
+        {
+            fputs(newline, temp);
+            fputs("\n", temp);
+            fputs(buffer, temp);
+        }
+        // otherwise write this line to the temp file
+        else
+            fputs(buffer, temp);
+
+        // increment the current line as we will now be reading the next line
+        current_line++;
+
+    } while (keep_reading);
+
+    // close our access to both files as we are done with them
+    fclose(file);
+    fclose(temp);
+
+    // delete the original file, rename temp file to the original file's name
+    remove(filename);
+    rename(temp_filename, filename);
 }
