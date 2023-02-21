@@ -146,12 +146,14 @@ void menu()
     char *strMenu = "\n1. Spela igen \n2. Avsluta \n3. Se lowscore \nVälj: ";
     char *strError = "Fel inmatning. Försök igen.";
 
-    do {
-    // show the menu and get the user's choice
-    userChoice = handleMenuPrompt(strMenu);
+    do
+    {
+        // show the menu and get the user's choice
+        userChoice = handleMenuPrompt(strMenu);
 
-    // execute the chosen option
-    switch (userChoice) {
+        // execute the chosen option
+        switch (userChoice)
+        {
         case OPTION_PLAY_AGAIN:
             // play game
             playGameScore();
@@ -168,10 +170,10 @@ void menu()
             // print error message
             fprintf(stderr, strError);
             break;
-    }
+        }
 
-    // print new line
-    printf("\n");
+        // print new line
+        printf("\n");
 
     } while (userChoice != OPTION_EXIT);
 }

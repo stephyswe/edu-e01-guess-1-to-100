@@ -3,7 +3,8 @@
 #include <time.h>
 #include <stdlib.h>
 
-int getRandomNumber() {
+int getRandomNumber()
+{
     // variables
     int number;
 

@@ -23,9 +23,9 @@ void checkFileExist(FILE *file_ptr)
 
     // Check if file exists
     char there_was_error = 0;
-    char opened_in_read  = 1;
+    char opened_in_read = 1;
 
-     // strings
+    // strings
     char answer[8];
     char *strIntro = "Vill du skapa en ny fil (score.txt)? (Ja/Nej): ";
     char *strYes = "Ja";
@@ -53,8 +53,10 @@ void checkFileExist(FILE *file_ptr)
         printf("Do you want to create a new file? (Ja/Nej) \n");
 
         // loop while answer is not "Ja" or "Nej"
-        while (scanf(" %s", &answer) == 1 && strcmp(answer, strYes) != 0) {
-             if (strcmp(answer, strYes) == 0){
+        while (scanf(" %s", &answer) == 1 && strcmp(answer, strYes) != 0)
+        {
+            if (strcmp(answer, strYes) == 0)
+            {
 
                 // create file
                 file_ptr = fopen(FILE_SCORE, "r");
@@ -63,13 +65,15 @@ void checkFileExist(FILE *file_ptr)
                 if (file_ptr == NULL)
                     there_was_error = 1;
             }
-            else if (strcmp(answer, strNo) == 0){
+            else if (strcmp(answer, strNo) == 0)
+            {
                 // Exit program
                 exit(EXIT_FAILURE);
             }
-            else{
+            else
+            {
                 printf("Felaktig inmatning. Försök igen. \n");
-        }
+            }
         }
 
         // Check if there was an error
@@ -110,7 +114,6 @@ FileData readFile()
     // Return file data
     return fdata;
 }
-
 
 // Function: scoreToFile
 // Description: Adds score to file

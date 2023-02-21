@@ -13,7 +13,8 @@
 // Side-effects: None
 // Error-handling: None
 // Status: 'Working'
-Score scoreAdd(int tries, int row) {
+Score scoreAdd(int tries, int row)
+{
 
     // Create score struct
     Score score;
@@ -30,7 +31,6 @@ Score scoreAdd(int tries, int row) {
     // Return score
     return score;
 }
-
 
 // Function: scoreCheck
 // Description: Checks if score is highscore
@@ -80,7 +80,6 @@ Score scoreCheck(int tries)
         // create a new score
         score = scoreAdd(tries, row_line);
     }
-
 
     // close file
     fclose(fdata.file_ptr);

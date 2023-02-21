@@ -19,8 +19,6 @@ Player playerAdd(int points)
     // Create player struct
     Player player;
 
-    // Temporary name, date & points
-    
     // set name by user input
     printf(strTypeName);
     scanf("%s", player.name);
