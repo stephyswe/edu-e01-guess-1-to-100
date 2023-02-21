@@ -1,79 +1,105 @@
-/* Uppgift 1. Gissa talet - Godkänt kritierium
-
-** Innehåller **
-- Structs (4)
-- Funktioner (3)
-- While-loopar (2)
-- If-satser (2)
-- Slumptal (1)
-- Strängar (2)
-- Inmatning (2)
-- Inmatningskontroll (1)
-
-** Common Functions **
-strcpy - The strcpy() function copies the string pointed by source
-    (including the null character) to the destination
-e.x.    strcpy(player.date, getCurrentDate());
-        instead of
-        player.date = getCurrentDate();
+/* Uppgift 1. Gissa talet - Godkänt kritierium - v.1.1 */
 
 
-- https://www.programiz.com/c-programming/library-function/string.h/strcpy
+** Innehållsförteckning **
+- Programmet
+- Filstruktur
+- Beskrivning
 
-** Chronological Structs/Common (18) **
-- char *getCurrentDate - gets the current date
-- bool isNumber(char *input, bool has_decimal, bool isInteger) - checks if a string is a number
-- bool isDecimal(char *input, bool has_decimal) - checks if a string is a decimal
+** Programmet **
 
-- void checkFileExist(file_ptr) - checks if a file exists
-- typedef struct FileData - struct to store data from a file
-- FileData readFile - reads a file and returns the data
-- FileData writeFile - writes data to a file
-- void viewLowScoreboard - views the low scoreboard
+** Programmet börjar i main() med två funktioner. Spelet startas med playScoreGame() och
+    efter avslutat spel visas en menu(). **
 
-- typedef struct Player - struct to store a player
-- Player playerAdd(int tries) - adds a player to player struct
+** Menu() har tre valmöjligheter, att spela spelet(1) eller att se scoreboard(2). Samt att avsluta spelet(3) **
 
-- typedef struct Score - struct to store a score
-- Score scoreAdd(int write_line, struct Player player) - adds a score to a score struct
-- Score scoreCheck(points) - checks if a score is valid
-- void scoreToFile(int write_line, struct Player player) - adds a score to a score struct
+** playScoreGame() har två funktioner, att spela spelet och att spara användarens resultat till en fil.
+    - playGame() - sparar användarens resultat i en int tries.
+    - scoreCheck() - kontrollerar om användarens resultat är mindre än nuvarande scoreboard.
+    om score.isHighScore är sant 
+    - sparar användarens resultat i ett Player objekt via playerAdd(). 
+    - scoreToFile() - sparas användarens resultat till en fil. På rätt plats i scoreboard.
+**
 
-- int handlePromptDefault(char* stringMessage, int tries) - handles prompt for default messages
+- playGame()
 
-- int playGame - plays a game of 'Guess the number'
-- void playGameScore - plays a game and saves the score
+** playGame() skapar ett slumpmässigt nummer via getRandomNumber(). handlePrompt() är en funktion som hanterar användarens input. Funktionen ger därefter en ledtråd om användarens gissning är för hög eller för låg. Om användarens gissning är rätt så returneras antalet försök som användaren gjorde. **
 
-- void menu - playGameScore & viewLowScoreboard
-- int main - playGameScore & menu
+** getRandomNumber() skapar ett slumpmässigt nummer mellan 1 och 100. **
+** handlePrompt() hanterar användarens input. Om användarens input är ett nummer mellan 1 och 100 så returneras det. Om användarens input inte är ett nummer mellan 1 och 100 eller ogiltligt returneras ett felmeddelande. **
 
-** Funktioner (3) **
-- main - main function
-- playGame - plays a game of 'Guess the number'
-- handlePrompt - handles the prompt for the user
+- scoreCheck()
 
-** While-loopar (2) **
-- main - while loop to check value of playAgain
-- playGame - while loop to check if user input is correct
+** scoreCheck() läser av scoreboard filen via readFile() och loopar igenom alla rader. scoreAdd() anropas om användarens resultatet är:
+- (1) mindre än nuvarande scoreboard. 
+- (2) antalet rader i scoreboard är mindre än 5  **
 
-** If-satser (2) **
-- main - if statement to check if user input is "Ja"
-- main - if statement to check if user input is "Nej"
+** scoreAdd() skapar ett Score objekt och returnerar det med isHighscore satt till sant. **
 
-** Slumptal (1) **
-- playGame - generates a random number
+- playerAdd()
 
-** Strängar (2) **
-- main - string to ask user if they wanna play again or not
-- main - string to check if user input is "Ja"
-- main - string to check if user input is "Nej"
+** playerAdd() skapar ett Player objekt och returnerar det. **
 
-** Inmatning (2) **
-- main - scanf to get user input
-- playGame - scanf to get user input
+- scoreToFile()
 
-** Inmatningskontroll (1) **
-- playGame - if statement to check if user input is a number
+** scoreToFile() anropas med en giltlig rad (write_line) och spelarens resultat. Först sparas datum, användarens namn och poäng i en "newline" rad. Scoreboard filen läser varje rad med fgets() och incrementerar current_line med 1.
+
+om Scoreboard filen är tom eller har 5 rader:
+- (1) är scoreboard filen tom "ftell(file) == 0" - lägg till "newline" raden i scoreboard filen.
+- (2) är om raden är tom ... TODO
+** 
+
+** Filstruktur **
+### Det finns totalt 15 filer i projektet. 1 scoreboard fil. 3 structs, 2 common, 2 file, 1 main, 4 inputs och 2 prompt ###
+
+## Scoreboard file
+scoreboard.txt
+
+## Struct (3)
+FileData.h
+- FILE *file_ptr, char file_name[60]
+
+Score.h
+- bool isHighScore, int row
+
+Player.h
+- char date[20], char name[20], int points
+
+## Common (2)
+common.c
+- int getRandomNumber()
+- char *getCurrentDate()
+
+## File (2)
+file.c
+- void checkFileExist(FILE *file_ptr)
+- FileData readFile()
+- void scoreToFile(int write_line, Player player)
+
+## Main (1)
+main.c
+- void viewLowScoreboard()
+- int playGame()
+- void playGameScore()
+- void menu()
+- void main()
+
+
+## Input (4)
+playerinput.c
+- Player playerAdd(int points)
+
+scoreinput.c
+- Score scoreAdd(int row)
+- Score scoreCheck(int tries)
+
+## Prompt (2)
+prompt.c
+- void validateInput(char *inputBuffer)
+- bool checkInteger(char *input)
+- bool isWithinRange(int num, int min, int max)
+- int handlePrompt(const char *prompt, int tries)
+- int handleMenuPrompt(const char *prompt)
 
 
 ** Beskrivning **
