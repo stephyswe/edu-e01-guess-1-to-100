@@ -1,4 +1,4 @@
-#include "safeinput.h"
+#include "prompt.h"
 #include "date.h"
 #include "file.h"
 #include "scoreinput.h"
