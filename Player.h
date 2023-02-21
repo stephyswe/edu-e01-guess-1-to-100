@@ -1,5 +1,8 @@
 #include <stdio.h>
 
+#ifndef PLAYER_H
+#define PLAYER_H
+
 // struct player
 // Description: Struct for player with date
 // Parameters: none
@@ -18,3 +21,5 @@ typedef struct
     // Player points
     int points;
 } Player;
+
+#endif
