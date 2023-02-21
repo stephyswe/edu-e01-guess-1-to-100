@@ -1,6 +1,9 @@
 #include <stdio.h>
 #include <stdbool.h>
 
+#ifndef SCORE_H
+#define SCORE_H
+
 // Function: Struct Score
 // Description: Struct for score
 // Parameters: None
@@ -19,3 +22,5 @@ typedef struct
     // Score row
     int row;
 } Score;
+
+#endif
