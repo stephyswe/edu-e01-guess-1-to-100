@@ -1,5 +1,8 @@
 #include <stdio.h>
 
+#ifndef FILEDATA_H
+#define FILEDATA_H
+
 // Function: Struct FileData
 // Description: Struct for file data
 // Parameters: None
@@ -15,3 +18,5 @@ typedef struct
     // File name
     char file_name[60];
 } FileData;
+
+#endif

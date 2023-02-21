@@ -22,28 +22,6 @@
 
 // Info in README.me
 
-// Function: readFile
-// Description: Reads file
-// Parameters: None
-// Returns: struct FileData
-// Side-effects: None
-// Error-handling: None
-// Status: 'Working'
-FileData readFile()
-{
-    // Read file
-    FileData fdata;
-
-    // Open file
-    fdata.file_ptr = fopen(FILE_SCORE, "r");
-
-    // Check if file exists
-    checkFileExist(fdata.file_ptr);
-
-    // Return file data
-    return fdata;
-}
-
 // Function: writeFile
 // Description: Writes to file
 // Parameters: None
