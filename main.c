@@ -4,6 +4,8 @@
 #include <time.h>
 #include <string.h>
 #include <errno.h>
+#include <math.h>
+#include <ctype.h>
 
 #define FILENAME_SIZE 1024
 #define MAX_LINE 2048
@@ -548,7 +550,7 @@ Score scoreCheck(int tries)
     return score;
 }
 
-// Function: scoreAdd
+// Function: scoreToFile
 // Description: Adds score to file
 // Parameters: int write_line, struct Player player
 // Returns: None
@@ -661,6 +663,44 @@ void scoreToFile(int write_line, Player player)
     rename(temp_filename, filename);
 }
 
+// Function handlePromptDefaultTwo
+// Description: Prompts user for input
+// Parameters: char* stringMessage, int tries
+// Returns: int number
+// Side-effects: None
+// Error-handling: None
+// Status: 'Working'
+int handlePromptDefaultTwo(char *stringMessage, int tries)
+{
+   int number;
+    char input[100];
+    while (1) {
+        printf(stringMessage, tries);
+        if (fgets(input, sizeof(input), stdin) == NULL) {
+            printf("Error reading input\n");
+            exit(1);
+        }
+        
+        int length = strlen(input);
+        int i, is_integer = 1;
+        for (i = 0; i < length; i++) {
+            if (!isdigit(input[i])) {
+                if (input[i] == '\n' || input[i] == '\0') {
+                    break;
+                }
+                is_integer = 0;
+                break;
+            }
+        }
+        if (is_integer) {
+            number = atoi(input);
+            break;
+        }
+        printf("Invalid input, try again\n");
+    }
+    return number;
+}
+
 // Function handlePromptDefault
 // Description: Prompts user for input
 // Parameters: char* stringMessage, int tries
@@ -735,7 +775,7 @@ int playGame()
     while (win == false)
     {
         // checks if guess is between 1 and 100 and if it is an integer
-        guess = handlePromptDefault(strGuess, tries);
+        guess = handlePromptDefaultTwo(strGuess, tries);
 
         // check if guess is correct
         if (guess == number)
@@ -812,7 +852,7 @@ void menu()
     {
         // switch case to check answer from user to execute cases accordingly (1, 2 or 3)
         // and error handling if answer is not 1, 2 or 3 (default)
-        switch (handlePromptDefault(strMenu, 0))
+        switch (handlePromptDefaultTwo(strMenu, 0))
         {
         case 1:
             // play game
