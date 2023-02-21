@@ -6,6 +6,7 @@
 #include <math.h>
 #include <ctype.h>
 #include <errno.h>
+#include <unistd.h>
 
 // struct files
 #include "FileData.h"
@@ -16,97 +17,6 @@
 #define MAX_LINE 2048
 #define FILE_SCORE "scoreboard.txt"
 
-// error number
-extern int errno;
-
-void checkFileExist(FILE *file_ptr)
-{
-    // Error number
-    int errnum;
-
-    // Check if file exists
-    char there_was_error = 0;
-    char opened_in_read = 1;
-
-    // strings
-    char answer[8];
-    char *strIntro = "Vill du skapa en ny fil (scoreboard.txt)? (Ja/Nej): ";
-
-    char *strErrorValue = "Value of errno: %d\n";
-    char *strErrorOpeningFile = "Error opening file: %s\n";
-    char *strErrorPrinted = "Error printed by perror\n";
-    char *strErrorOpening = "Error opening file: %s\n";
-    char *strErrorDisc = "Disc full or no permission\n";
-
-    char *strErrorInput = "Felaktig inmatning. Försök igen. \n";
-
-    // strings file
-    char *strFileSuccess = "The file %s was created successfully. \n";
-    char *strYes = "Ja";
-    char *strNo = "Nej";
-
-    // Check if file exists
-    if (file_ptr == NULL)
-    {
-        // Get error number
-        errnum = errno;
-
-        // Print error message
-        fprintf(stderr, strErrorValue, errno);
-
-        // Print error message
-        perror(strErrorPrinted);
-
-        // Print error message
-        fprintf(stderr, strErrorOpeningFile, strerror(errnum));
-
-        // Print error message
-        printf(strErrorOpening, file_ptr);
-
-        // Ask user if they want to create a new file
-        printf(strIntro);
-
-        // loop while answer is not "Ja" or "Nej"
-        while (scanf(" %s", &answer) == 1 && strcmp(answer, strYes) != 0)
-        {
-            if (strcmp(answer, strYes) == 0)
-            {
-
-                // create file
-                file_ptr = fopen(FILE_SCORE, "r");
-
-                // Check if file exists. if Not set there_was_error to 1
-                if (file_ptr == NULL)
-                    there_was_error = 1;
-            }
-            else if (strcmp(answer, strNo) == 0)
-            {
-                // Exit program
-                exit(EXIT_FAILURE);
-            }
-            else
-            {
-                printf(strErrorInput);
-            }
-        }
-
-        // Check if there was an error
-        if (there_was_error)
-        {
-            // Print error message
-            printf(strErrorDisc);
-
-            // Exit program
-            exit(EXIT_FAILURE);
-        }
-
-        // Check if file was opened in read mode
-        else
-            // Print success message
-            printf(strFileSuccess, FILE_SCORE);
-    }
-}
-
 FileData readFile()
 {
     // Read file
@@ -115,11 +25,27 @@ FileData readFile()
     // Open file
     fdata.file_ptr = fopen(FILE_SCORE, "r");
 
-    // Check if file exists
-    checkFileExist(fdata.file_ptr);
-
     // Return file data
     return fdata;
+}
+
+int createFileWithEmptyRow(char *filename)
+{
+    if (access(filename, F_OK) != -1)
+    {
+        return 0;
+    }
+    else
+    {
+        FILE *file_ptr = fopen(filename, "w");
+        if (file_ptr == NULL)
+        {
+            printf("Error creating file");
+            return -1;
+        }
+        fclose(file_ptr);
+        return 1;
+    }
 }
 
 void scoreToFile(int write_line, Player player)
@@ -150,13 +76,12 @@ void scoreToFile(int write_line, Player player)
     // below fgets will 'fail' as it will immediately encounter a newline
     fflush(stdin);
 
+    // check if file exists
+    createFileWithEmptyRow(FILE_SCORE);
+
     // open the original file for reading, and the temp file for writing
     file = fopen(filename, "r");
     temp = fopen(temp_filename, "w");
-
-    // check if either file failed to open, if either did exit with error status
-    // checkFileExist(file);
-    checkFileExist(temp);
 
     // we'll keep reading the file so long as keep_reading is true
     bool keep_reading = true;
@@ -171,32 +96,11 @@ void scoreToFile(int write_line, Player player)
         // if we've reached the end of the file, stop reading
         if (feof(file) || current_line == 5)
         {
-
-            // Scenario: File Empty
-
-            // go to the end of the file
-            fseek(file, 0, SEEK_END); // goto end of file
-
-            // if the file is empty, write the new line to the file
-            if (ftell(file) == 0)
-            {
-                fputs(newline, temp);
-                fputs("\n", temp);
-            }
-
             // Scenario: Line Empty
-            else if (current_line == write_line)
+            if (current_line == write_line)
             {
                 fputs(newline, temp);
                 fputs("\n", temp);
-            }
-
-            // Scenario: Line is greater than current line
-            else if (write_line > current_line)
-            {
-                fputs(buffer, temp);
-                fputs("\n", temp);
-                fputs(newline, temp);
             }
 
             // stop reading
@@ -210,7 +114,7 @@ void scoreToFile(int write_line, Player player)
             fputs("\n", temp);
             fputs(buffer, temp);
         }
-        // otherwise write this line to the temp file
+        // write the line from the original file to the temp file
         else
             fputs(buffer, temp);
 

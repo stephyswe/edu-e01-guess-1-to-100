@@ -40,7 +40,7 @@ int playGame()
     // variables
     int number = 0;
     int guess = 0;
-    int tries = 1;
+    int tries = 0;
     bool win = false;
 
     // seed random number generator
@@ -55,11 +55,14 @@ int playGame()
     char *strGuess = "Gissning %d: ";
 
     // intro
-    printf(strIntro);
+    printf("%s", strIntro);
 
     // while loop to check if guess is correct
-    while (win == false)
+    while (!win)
     {
+         // increment tries
+        tries++;
+
         // checks if guess is between 1 and 100 and if it is an integer
         guess = handlePrompt(strGuess, tries);
 
@@ -71,23 +74,13 @@ int playGame()
 
             // set win to true
             win = true;
-
-            // break loop
-            break;
         }
-
         // check if guess is higher than number
         else if (guess > number)
-            // print lower message
             printf(strLower);
-
         // check if guess is lower than number
         else if (guess < number)
-            // print higher message
             printf(strHigher);
-
-        // increment tries
-        tries++;
     }
 
     // return tries
