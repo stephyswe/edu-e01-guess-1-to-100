@@ -1,4 +1,4 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int handlePromptDefaultTwo(char *stringMessage, int tries);
+int handlePrompt(char *prompt, int tries);

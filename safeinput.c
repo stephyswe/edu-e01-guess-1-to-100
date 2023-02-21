@@ -2,41 +2,83 @@
 #include <ctype.h>
 #include <string.h>
 #include <stdlib.h>
+#include <stdbool.h>
 
-// Function handlePromptDefaultTwo
+
+bool checkInteger(char *input) {
+    // variables
+    int length = strlen(input);
+    int i;
+    bool is_integer = true;
+
+    // loop through input
+    for (i = 0; i < length; i++) {
+
+        // check if input is integer
+        if (!isdigit(input[i])) {
+
+            // check if input is newline or null
+            if (input[i] == '\n' || input[i] == '\0') {
+                break;
+            }
+
+            // input is not integer
+            is_integer = false;
+            break;
+        }
+    }
+    return is_integer;
+}
+
+// Function: isWithinRange
+// Description: Checks if number is within range
+// Parameters: int num
+// Returns: bool
+// Side-effects: None
+// Error-handling: None
+// Status: 'Working'
+bool isWithinRange(int num) {
+    if (num >= 1 && num <= 100)
+        return true;
+    else
+        return false; 
+}
+
+// Function handlePrompt
 // Description: Prompts user for input
-// Parameters: char* stringMessage, int tries
+// Parameters: char* prompt, int tries
 // Returns: int number
 // Side-effects: None
 // Error-handling: None
 // Status: 'Working'
-int handlePromptDefaultTwo(char *stringMessage, int tries)
+int handlePrompt(char *prompt, int tries)
 {
-   int number;
-    char input[100];
-    while (1) {
-        printf(stringMessage, tries);
-        if (fgets(input, sizeof(input), stdin) == NULL) {
+    // variables
+    int number;
+    char inputBuffer[100];
+
+    // error messages
+    char *strErrorDefaultMsg = "Ogiltig inmatning, försök igen\n";
+    char *strErrorNumberMsg = "Ogiltigt nummer, måste vara 1 - 100, försök igen\n";
+
+    while (true) {
+        printf(prompt, tries);
+        if (fgets(inputBuffer, sizeof(inputBuffer), stdin) == NULL) {
             printf("Error reading input\n");
             exit(1);
         }
-        
-        int length = strlen(input);
-        int i, is_integer = 1;
-        for (i = 0; i < length; i++) {
-            if (!isdigit(input[i])) {
-                if (input[i] == '\n' || input[i] == '\0') {
-                    break;
-                }
-                is_integer = 0;
-                break;
-            }
-        }
-        if (is_integer) {
-            number = atoi(input);
+
+        int inputValue = atoi(inputBuffer);
+        bool isValidInput = checkInteger(inputBuffer) && isWithinRange(inputValue);
+
+        if (isValidInput) {
+            number = inputValue;
             break;
+        } else if (isWithinRange(inputValue)) {
+            printf(strErrorDefaultMsg);
+        } else {
+            printf(strErrorNumberMsg);
         }
-        printf("Invalid input, try again\n");
     }
     return number;
 }

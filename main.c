@@ -103,7 +103,7 @@ int playGame()
     while (win == false)
     {
         // checks if guess is between 1 and 100 and if it is an integer
-        guess = handlePromptDefaultTwo(strGuess, tries);
+        guess = handlePrompt(strGuess, tries);
 
         // check if guess is correct
         if (guess == number)
@@ -180,7 +180,7 @@ void menu()
     {
         // switch case to check answer from user to execute cases accordingly (1, 2 or 3)
         // and error handling if answer is not 1, 2 or 3 (default)
-        switch (handlePromptDefaultTwo(strMenu, 0))
+        switch (handlePrompt(strMenu, 0))
         {
         case 1:
             // play game
