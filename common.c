@@ -3,19 +3,24 @@
 #include <time.h>
 #include <stdlib.h>
 
+#define MAX_NUMBER 100
+
 int getRandomNumber()
 {
-    // variables
-    int number;
+    // Initialize random number generator
+    static int initialized = 0;
 
-    // Seed random number generator
-    srand(time(NULL));
+    // Initialize random number generator
+    if (!initialized) {
+        // Seed random number generator
+        srand(time(NULL));
 
-    // Get random number
-    number = rand() % 100 + 1;
+        // Set initialized to 1
+        initialized = 1;
+    }
 
-    // return number
-    return number;
+    // Return random number
+    return rand() % MAX_NUMBER + 1;
 }
 
 char *getCurrentDate()
