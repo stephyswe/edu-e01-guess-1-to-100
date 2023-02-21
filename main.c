@@ -1,13 +1,5 @@
-#include <stdio.h>
-#include <stdbool.h>
-#include <stdlib.h>
-#include <time.h>
-#include <string.h>
-#include <math.h>
-#include <ctype.h>
-
-#include "safeinput.h" 
-#include "date.h" 
+#include "safeinput.h"
+#include "date.h"
 #include "file.h"
 #include "scoreinput.h"
 #include "playerinput.h"
@@ -16,39 +8,12 @@
 #include "Player.h"
 #include "Score.h"
 
-#define FILENAME_SIZE 1024
-#define MAX_LINE 2048
-#define BUF_SIZE 65536
-#define FILE_SCORE "score.txt"
-
 // menu options
 #define OPTION_PLAY_AGAIN 1
 #define OPTION_EXIT 2
 #define OPTION_VIEW_SCOREBOARD 3
 
 // Info in README.me
-
-// Function: writeFile
-// Description: Writes to file
-// Parameters: None
-// Returns: struct FileData
-// Side-effects: None
-// Error-handling: None
-// Status: 'Working'
-FileData writeFile()
-{
-    // Write to file
-    FileData fdata;
-
-    // Open file
-    fdata.file_ptr = fopen(FILE_SCORE, "w");
-
-    // Check if file exists
-    checkFileExist(fdata.file_ptr);
-
-    // Return file data
-    return fdata;
-}
 
 // Function: viewLowScoreboard
 // Description: View lowscoreboard
