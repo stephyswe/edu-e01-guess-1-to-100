@@ -8,10 +8,7 @@
 // Description: confirm highscore and row
 typedef struct
 {
-    // Score isHighScore
     bool isHighScore;
-
-    // Score row
     int row;
 } Score;
 
