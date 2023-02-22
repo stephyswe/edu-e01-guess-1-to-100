@@ -7,14 +7,13 @@ Uppgift 1. Gissa talet - Godkänt kritierium - v.1.1
 - Programmet
 - Filstruktur
 
-
-
 ## Beskrivning ##
-Programmet ska spela spelet "Gissa talet" med användaren. Spelet går ut på att användaren ska gissa ett tal mellan 1 och 100.
-Programmet ska välja ett slumptal och sedan låta användaren gissa vilket tal det är. Efter varje gissning ska programmet ge en ledtråd om talet är större eller mindre.
-När användaren gissar rätt ska programmet visa hur många gissningar det tog och fråga om användaren vill spela igen.
+Programmet "Gissa talet" utmanar användaren att gissa ett slumpmässigt valt tal mellan 1 och 100. Efter varje gissning ges en ledtråd om talet är större eller mindre än det gissade talet. När användaren till slut gissar rätt visar programmet antalet gissningar det tog och frågar om användaren vill spela igen. 
 
-** Exempel  **
+### Väl godkänt ####
+ - Om användarens resultat är lägre än resultatet i scoreboard-filen, kan de spara datum, namn och poäng i filen.
+
+** Exempel - Godkänt  **
 * Gissa ett tal mellan 1 och 100.
 * Gissning 1: 50
 * Talet är lägre.
@@ -28,10 +27,18 @@ När användaren gissar rätt ska programmet visa hur många gissningar det tog 
 * Rätt! Du gissade rätt på 5 försök.
 * Vill du spela igen? (Ja/Nej):
 
+** Exempel - Väl Godkänt  **
+* Samma som ovan.
+* Rätt! Du gissade rätt på 5 försök.
+* Ange ditt namn: ___
+1. Spela igen
+2. Avsluta
+3. Se lowscore
+* Välj: ___
+
 ## Kravspecifikation ##
 
 ### Godkänt ###
-
     Programmet ska använda de texter som finns i exemplet ovan.
     - Texter sparas som chars (stringtecken).
 
@@ -59,7 +66,6 @@ När användaren gissar rätt ska programmet visa hur många gissningar det tog 
     Vid alla andra svar ställs frågan om man vill spela om igen.
     - "Vill du spela igen? (Ja/Nej):" visas efter varje spel.
 
-
 ### Väl Godkänt ###
     Programmet ska innehålla en ”low score lista”. De (max) fem LÄGSTA resultaten ska lagras i en fil. Och när man spelat en omgång ska man
     (ifall man platsar på highscore) få mata in sitt namn och sen lagrtas man på rätt plats i highscorelistan
@@ -82,43 +88,62 @@ När användaren gissar rätt ska programmet visa hur många gissningar det tog 
     Samt med meddelande "Felaktig inmatning" när användaren skriver felaktigt val i menyn. Användaren får uppmaning att försöka igen till de skriver in ett tal med siffror.
 
 ## Programmet ##
+Programmet inleds i main() med två funktioner, där spelet påbörjas genom funktionen 'playScoreGame()', och efter spelet är avslutat visas en meny() med tre alternativ: att spela spelet (1), visa scoreboard (2), eller att avsluta spelet (3). Om användaren väljer att spela spelet igen så startas funktionen 'playScoreGame()' igen. Om användaren väljer att visa scoreboard så visas scoreboard() och om användaren väljer att avsluta spelet så avslutas programmet.
 
-Programmet börjar i main() med två funktioner. Spelet startas med playScoreGame() och efter avslutat spel visas en menu(). Menu() har tre valmöjligheter, att spela spelet(1) eller att se scoreboard(2). Samt att avsluta spelet(3)
+playScoreGame() omfattar två funktioner: att spela spelet och att spara användarens resultat till en fil. playGame() ansvarar för att lagra användarens gissningsförsök i en variabel 'tries', medan scoreCheck() verifierar om användarens resultat är mindre än det nuvarande resultatet i scoreboard.
 
-playScoreGame() har två funktioner, att spela spelet och att spara användarens resultat till en fil.
-- playGame() - sparar användarens resultat i en int tries.
-- scoreCheck() - kontrollerar om användarens resultat är mindre än nuvarande scoreboard.
-
-- ### om score.isHighScore är sant 
-- - sparar användarens resultat i ett Player objekt via playerAdd(). 
-- - scoreToFile() - sparas användarens resultat till en fil. På rätt plats i scoreboard.
+om score.isHighScore är sant
+- playerAdd - registrerar användarens resultat som en ny post i Player-objektet
+- scoreToFile() - sätter in användarens resultat på lämplig plats i scoreboard-filen
 
 ### playGame() ###
-playGame skapar ett slumpmässigt nummer via getRandomNumber(). handlePrompt() är en funktion som hanterar användarens input. Funktionen ger därefter en ledtråd om användarens gissning är för hög eller för låg. Om användarens gissning är rätt så returneras antalet försök som användaren gjorde. **
+Funktionen playGame genererar ett slumpmässigt nummer med hjälp av getRandomNumber(). handlePrompt() hanterar användarens input och ger ledtrådar om gissningen är för hög eller för låg. Om användaren gissar rätt returneras antalet försök som användes.
 
-getRandomNumber() - skapar ett slumpmässigt nummer mellan 1 och 100.
+getRandomNumber() - genererar ett slumpmässigt heltal mellan 1 och 100.
 
-handlePrompt() - hanterar användarens input. Om användarens input är ett nummer mellan 1 och 100 så returneras det. Om användarens input inte är ett nummer mellan 1 och 100 eller ogiltligt returneras ett felmeddelande.
+handlePrompt() - hanterar användarens inmatning. Om användarens inmatning är ett giltigt heltal mellan 1 och 100 returneras det. Om inmatningen inte är ett giltigt heltal mellan 1 och 100 returneras ett felmeddelande.
 
 
 ### scoreCheck() ###
-scoreCheck läser av scoreboard filen via readFile() och loopar igenom alla rader. scoreAdd() anropas om användarens resultatet är:
-- (1) mindre än nuvarande scoreboard. 
-- (2) antalet rader i scoreboard är mindre än 5  **
+scoreCheck kontrollerar scoreboard-filen genom att läsa in den med hjälp av readFile() och iterera igenom varje rad. scoreAdd() funktionen anropas när användarens resultat uppfyller en av följande kriterier:
+(1) Det är mindre än det nuvarande resultatet i scoreboard.
+(2) Antalet rader i scoreboard är mindre än 5.
 
-scoreAdd() - skapar ett Score objekt och returnerar det med valt rad samt isHighscore satt till sant. **
+scoreAdd() - skapar och returnerar ett Score-objekt med vald rad och isHighscore inställd på sant.
 
 ### playerAdd() ###
 
-playerAdd skapar ett Player objekt och returnerar det. **
+"playerAdd" skapar och returnerar en instans av "Player"-klassen.
 
 ### scoreToFile() ###
 
-scoreToFile anropas med en giltlig rad (write_line) och spelarens resultat. Först sparas datum, användarens namn och poäng i en "newline" rad. Scoreboard filen läser varje rad med fgets() och incrementerar current_line med 1.
+scoreToFile anropas med radnummer (write_line) och Player-objekt.
+Datum, namn och poäng sparas i en "newline"-rad med sprintf().
+Scoreboard-filen läser varje rad med fgets() och ökar current_line med 1.
+Det finns tre scenarion där det nya resultatet sparas i temporär fil. Efter scenarion stängs scoreboard-filen och temporära filen med fclose().
+Slutligen tas den nuvarande scoreboard-filen bort med remove() och ersätts av den temporära filen via funktionen rename().
 
-om Scoreboard filen är tom eller har 5 rader:
-- (1) är scoreboard filen tom "ftell(file) == 0" - lägg till "newline" raden i scoreboard filen.
-- (2) är om raden är tom ... TODO
+---
+
+#### Scenario (1): Om scoreboard-filen inte existerar
+- Skapa filen med createFileWithEmptyRow() 
+- empty row
+
+#### Scenario (2): Om scoreboard-filen existerar och antalet rader är mindre än 5
+- same row
+- empty row
+
+#### Scenario (3): Om scoreboard-filen existerar, antalet rader är 5 och andra platsen byts ut.
+- same row
+- found row
+- same row
+- same row
+
+
+    Empty row <> en rad med newline, en ny rad
+    Same row <> en rad med buffer
+    Found row <> en rad med newline, en ny rad, en rad med buffer
+
 
 
 ## Filstruktur ##
@@ -144,8 +169,8 @@ main.c
 - char *getCurrentDate()
  
 ### file.c ###
-- void checkFileExist(FILE *file_ptr)
 - FileData readFile()
+- void createFileWithEmptyRow(char *filename)
 - void scoreToFile(int write_line, Player player)
 
 ### inputs ###
