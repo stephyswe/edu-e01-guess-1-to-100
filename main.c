@@ -15,6 +15,9 @@
 #define OPTION_EXIT 2
 #define OPTION_VIEW_SCOREBOARD 3
 
+#define GAME_MAX 100
+#define MENU_MAX 3
+
 // Function: viewLowScoreboard
 // Description: View low scoreboard
 void viewLowScoreboard()
@@ -61,7 +64,7 @@ int playGame()
         numTries++;
 
         // checks if guess is between 1 and 100 and if it is an integer
-        userGuess = handlePrompt(strGuess, numTries);
+        userGuess = usePrompt(strGuess, GAME_MAX, numTries);
 
         // if guess is higher than number
         if (userGuess > randomNumber)
@@ -119,7 +122,7 @@ void menu()
     do
     {
         // show the menu and get the user's choice
-        userChoice = handleMenuPrompt(strMenu);
+        userChoice = usePrompt(strMenu, MENU_MAX, 0);
 
         // execute the chosen option
         switch (userChoice)

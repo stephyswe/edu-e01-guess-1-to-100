@@ -4,6 +4,8 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
+#define PROMPT_MIN 1
+
 // Function: validateInput
 // Description: Validates input
 // Parameters: char *inputBuffer
@@ -58,7 +60,7 @@ bool isWithinRange(int num, int min, int max)
     return (num >= min && num <= max);
 }
 
-int handlePrompt(const char *prompt, int tries)
+int usePrompt(const char *prompt, int max, int tries)
 {
     // variables
     int number;
@@ -66,54 +68,14 @@ int handlePrompt(const char *prompt, int tries)
 
     // error messages
     const char *strErrorDefaultMsg = "Felaktig inmatning, försök igen\n";
-    const char *strErrorNumberMsg = "Felaktigt nummer, måste vara 1 - 100, försök igen\n";
+    const char *strErrorNumberMsg = "Felaktigt nummer, måste vara %d - %d, försök igen\n";
 
     while (true)
     {
         printf(prompt, tries);
         validateInput(inputBuffer);
-
         int inputValue = atoi(inputBuffer);
-        const int withinRage = isWithinRange(inputValue, 1, 100);
-        bool isValidInput = checkInteger(inputBuffer) && withinRage;
-
-        if (isValidInput)
-        {
-            number = inputValue;
-            break;
-        }
-        else if (!checkInteger(inputBuffer))
-        {
-            printf(strErrorDefaultMsg);
-        }
-        else if (withinRage)
-        {
-            printf(strErrorDefaultMsg);
-        }
-        else
-        {
-            printf(strErrorNumberMsg);
-        }
-    }
-    return number;
-}
-
-int handleMenuPrompt(const char *prompt)
-{
-    // variables
-    int number;
-    char inputBuffer[100];
-
-    // error messages
-    const char *strErrorDefaultMsg = "Felaktig inmatning, försök igen\n";
-    const char *strErrorNumberMsg = "Felaktigt nummer, måste vara 1 - 100, försök igen\n";
-
-    while (true)
-    {
-        printf(prompt);
-        validateInput(inputBuffer);
-        int inputValue = atoi(inputBuffer);
-        const int withinRage = isWithinRange(inputValue, 1, 3);
+        const int withinRage = isWithinRange(inputValue, PROMPT_MIN, max);
 
         bool isValidInput = checkInteger(inputBuffer) && withinRage;
 
@@ -132,7 +94,7 @@ int handleMenuPrompt(const char *prompt)
         }
         else
         {
-            printf(strErrorNumberMsg);
+            printf(strErrorNumberMsg, PROMPT_MIN, max);
         }
     }
     return number;
