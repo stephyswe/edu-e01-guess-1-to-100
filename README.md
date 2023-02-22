@@ -40,26 +40,26 @@ Programmet "Gissa talet" utmanar användaren att gissa ett slumpmässigt valt ta
 
 ### Godkänt ###
     Programmet ska använda de texter som finns i exemplet ovan.
-    - Texter sparas som chars (stringtecken).
+    - Texterna sparas som teckensträngar (strings).
 
     Programmet ska välja olika slumptal varje gång.
-    - Slumptal genereras med rand() och time().
+    - Slumptalen genereras med rand() och time().
 
     Slumptalet ska kunna vara alla tal från 1 till och med 100 men inte 0 och inte 101.
-    - Slumptalet genereras med rand() % 100 + 1.
+    - Slumptalen genereras med rand() % 100 + 1.
 
     Skriver användaren in något som inte är ett tal ska de få uppmaningen att försöka igen tills de skriver in ett tal med siffror.
-    - Användaren får uppmaningen att försöka igen tills de skriver in ett tal med siffror.
+    - Användaren uppmanas att försöka igen tills de skriver in ett tal.
 
     Programmet ska bara räkna gissningar som är heltal. I exemplet ovan skriver användaren ”Fyra” vilket inte är ett heltal och får då försöka igen.
-    - Programmet räknar bara gissningar som är heltal.
+    - Programmet räknar endast gissningar som är heltal.
 
     Efter varje gissning ska en ledtråd visas om talet är större eller mindre.
-    - Ledtråd visas efter varje gissning.
+    - En ledtråd visas efter varje gissning.
 
     Gissar man rätt ska man få reda på hur många gissningar det tog och en fråga om man vill spela igen.
-    - "Rätt! Du gissade rätt på %d försök.\n" visas efter varje rätt gissning.
-    "Vill du spela igen? (Ja/Nej): " visas efter varje spel.
+    - "Rätt! Du gissade rätt på %d försök.\n" visas efter varje korrekt gissning.
+    "Vill du spela igen? (Ja/Nej): " visas efter varje spel.   
 
     Svara man Ja ska spelet starta om från början med ett helt nytt slumptal. Svara man Nej så avslutas programmet.
     
@@ -69,26 +69,24 @@ Programmet "Gissa talet" utmanar användaren att gissa ett slumpmässigt valt ta
 ### Väl Godkänt ###
     Programmet ska innehålla en ”low score lista”. De (max) fem LÄGSTA resultaten ska lagras i en fil. Och när man spelat en omgång ska man
     (ifall man platsar på highscore) få mata in sitt namn och sen lagrtas man på rätt plats i highscorelistan
-    - Low score lista lagras i en fil - "scoreboard.txt". Filen skapas om den inte finns, innehåller de fem lägsta resultaten och uppdateras efter varje spel.
+    - Low score listan lagras i filen "scoreboard.txt". Filen skapas om den inte finns, innehåller de fem lägsta resultaten och uppdateras efter varje spel.
 
     I menyn ska man kunna välja att se lowscore-listan. Så ska den visas upp på skärmen
-    - I menyn kan man välja lowscore-listan med val 3. "3. Se lowscore"
+    - I menyn kan användaren välja lowscore-listan med alternativ 3: "3. Se lowscore".
 
     Datum och tid, namn och antal gissningar ska lagras och visas för varje low-score entry
-    - Datum och tid, namn och antal gissningar visas för varje low-score entry
-    enligt format "DD/MM/YYY HH:MM NAMN SCORE" - e.x. "02/02/2023 13:17 TopPlayer 3"
+    - Datum och tid, namn och antal gissningar ska lagras och visas för varje low-score entry enligt formatet "DD/MM/YYY HH:MM NAMN SCORE", t.ex. "02/02/2023 13:17 TopPlayer 3
 
     Så istället för ”Vill du spela igen (Ja/Nej)?” ska du implementera en meny
-    - "meny" visas efter varje spel med switch case och val 1-3
-    "\n1. Spela igen \n2. Avsluta \n3. Se lowscore \n";
+    - Efter varje spel visas en meny med tre alternativ med hjälp av switch case:
+    "\n1. Spela igen \n2. Avsluta \n3. Se lowscore \n".
 
     Felhantering – inte krascha vid felaktig inmatning i menyer etc etc och hantera felmeddelanden för användaren
-    - Felmeddelande visas för användaren när användaren skriver fel format (text istället för siffror och/eller decimaltal. 
-    
-    Samt med meddelande "Felaktig inmatning" när användaren skriver felaktigt val i menyn. Användaren får uppmaning att försöka igen till de skriver in ett tal med siffror.
+    - Felmeddelande visas för användaren när användaren skriver felaktigt val i menyn. Användaren får uppmaning att försöka igen tills hen skriver in ett giltigt val.
+    Felmeddelande visas också när användaren skriver in fel format (text istället för siffror och/eller decimaltal). Meddelandet "Felaktig inmatning" visas och användaren får uppmaning att försöka igen tills hen skriver in ett giltigt tal.
 
 ## Programmet ##
-Programmet inleds i main() med två funktioner, där spelet påbörjas genom funktionen 'playScoreGame()', och efter spelet är avslutat visas en meny() med tre alternativ: att spela spelet (1), visa scoreboard (2), eller att avsluta spelet (3). Om användaren väljer att spela spelet igen så startas funktionen 'playScoreGame()' igen. Om användaren väljer att visa scoreboard så visas scoreboard() och om användaren väljer att avsluta spelet så avslutas programmet.
+Programmet inleds i main() med två funktioner, där spelet påbörjas genom funktionen 'playScoreGame()', och efter spelet är avslutat visas en meny() med tre alternativ: att spela spelet (1), visa scoreboard (2), eller att avsluta spelet (3). Om användaren väljer att spela spelet igen så startas funktionen 'playScoreGame()' igen. Om användaren väljer att visa scoreboard så visas viewLowScoreboard() och om användaren väljer att avsluta spelet så avslutas programmet.
 
 playScoreGame() omfattar två funktioner: att spela spelet och att spara användarens resultat till en fil. playGame() ansvarar för att lagra användarens gissningsförsök i en variabel 'tries', medan scoreCheck() verifierar om användarens resultat är mindre än det nuvarande resultatet i scoreboard.
 
@@ -113,15 +111,11 @@ scoreAdd() - skapar och returnerar ett Score-objekt med vald rad och isHighscore
 
 ### playerAdd() ###
 
-"playerAdd" skapar och returnerar en instans av "Player"-klassen.
+playerAdd skapar och returnerar en instans av "Player"-klassen.
 
 ### scoreToFile() ###
 
-scoreToFile anropas med radnummer (write_line) och Player-objekt.
-Datum, namn och poäng sparas i en "newline"-rad med sprintf().
-Scoreboard-filen läser varje rad med fgets() och ökar current_line med 1.
-Det finns tre scenarion där det nya resultatet sparas i temporär fil. Efter scenarion stängs scoreboard-filen och temporära filen med fclose().
-Slutligen tas den nuvarande scoreboard-filen bort med remove() och ersätts av den temporära filen via funktionen rename().
+scoreToFile anropas med radnummer (write_line) och Player-objekt. Datum, namn och poäng sparas i en "newline"-rad med sprintf(). Scoreboard-filen läser varje rad med fgets() och ökar current_line med 1. Det finns tre scenarion där det nya resultatet sparas i temporär fil. Efter scenarion stängs scoreboard-filen och temporära filen med fclose(). Slutligen tas den nuvarande scoreboard-filen bort med remove() och ersätts av den temporära filen via funktionen rename().
 
 ---
 
@@ -160,9 +154,9 @@ main.c
 - void main()
 
 ### struct ###
-- FileData.h <> FILE *file_ptr, char file_name[60]
-- Score.h <> bool isHighScore, int row
-- Player.h <> char date[20], char name[20], int points
+- FileData.h - FILE *file_ptr, char file_name[60]
+- Score.h - bool isHighScore, int row
+- Player.h - char date[20], char name[20], int points
 
 ### common.c ###
 - int getRandomNumber()
