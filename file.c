@@ -82,35 +82,24 @@ void scoreToFile(int line_to_write, int tries)
     // keep track of the current line number we are reading from the file
     int current_line = 1;
 
-    bool keep_reading = true;
-
     // loop through each line in the file
-    do
+    while (fgets(file.file_row, MAX_LINE, file.file_ptr) != NULL && current_line < MAX_LINES)
     {
-        // read the next line of the file into the buffer
-        fgets(file.file_row, MAX_LINE, file.file_ptr);
-        // if we've reached the end of the file, stop reading
-        if (current_line == MAX_LINES || feof(file.file_ptr))
+        if (current_line == line_to_write)
         {
-            // Scenario: empty row - fprintf() allows to write new line on same row
-            if (current_line == line_to_write)
-                fprintf(temp.file_ptr, "%s\n", newline);
-
-            // stop reading
-            keep_reading = false;
-        }
-
-        // scenario: found row - fprintf() allows to write new line on same row
-        else if (current_line == line_to_write)
             fprintf(temp.file_ptr, "%s\n%s", newline, file.file_row);
-
-        // scenario: same row
+        }
         else
+        {
             fputs(file.file_row, temp.file_ptr);
-
-        // increment the current line as we will now be reading the next line
+        }
         current_line++;
-    } while (keep_reading);
+    }
+
+    if (current_line == line_to_write && current_line < MAX_LINES)
+    {
+        fprintf(temp.file_ptr, "%s\n", newline);
+    }
 
     // close our access to both files as we are done with them
     fclose(file.file_ptr);
