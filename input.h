@@ -7,9 +7,9 @@
 
 // Function: playerAdd
 // Description: Adds player to struct
-// Parameters: int points
+// Parameters: int tries
 // Returns: struct Player
-Player playerAdd(int points);
+Player playerAdd(int tries);
 
 // Function: scoreCheck
 // Description: Checks if score is highscore

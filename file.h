@@ -16,7 +16,7 @@ FileData useFile(char *filename, char *mode);
 
 // Function: scoreToFile
 // Description: Writes the score to the file
-// Parameters: int write_line, Player player
-void scoreToFile(int write_line, Player player);
+// Parameters: int line_to_write, int tries
+void scoreToFile(int line_to_write, int tries);
 
 #endif /* FILE_H */

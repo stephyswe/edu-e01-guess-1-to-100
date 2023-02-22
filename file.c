@@ -17,6 +17,7 @@
 
 // header files
 #include "file.h"
+#include "input.h"
 
 void createFileWithEmptyRow(char *filename)
 {
@@ -53,8 +54,11 @@ FileData useFile(char *filename, char *mode)
     return fdata;
 }
 
-void scoreToFile(int line_to_write, Player player)
+void scoreToFile(int line_to_write, int tries)
 {
+    // create a Player
+    Player player = playerAdd(tries);
+
     // store the filename and temp filename
     char temp_filename[FILENAME_SIZE];
 

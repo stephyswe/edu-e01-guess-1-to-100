@@ -85,21 +85,11 @@ int playGame()
 // Description: Plays a game of 'Guess the number' and checks if score is highscore
 void playGameScore()
 {
-    // play Game - return tries
     int tries = playGame();
-
-    // check if player score is less then in scoreboard
     Score score = scoreCheck(tries);
 
-    // if yes, add to scoreboard
     if (score.isHighScore)
-    {
-        // create player object with name and date
-        Player player = playerAdd(tries);
-
-        // add player score to scoreboard file according to row
-        scoreToFile(score.row, player);
-    }
+        scoreToFile(score.row, tries);
 }
 
 // Function: menu
@@ -122,24 +112,19 @@ void menu()
         switch (userChoice)
         {
         case OPTION_PLAY_AGAIN:
-            // play game
             playGameScore();
             break;
         case OPTION_EXIT:
-            // exit game
             exit(EXIT_SUCCESS);
             break;
         case OPTION_VIEW_SCOREBOARD:
-            // view scoreboard
             viewLowScoreboard();
             break;
         default:
-            // print error message
-            fprintf(stderr, strError);
+            fprintf(stderr, "%s\n", strError);
             break;
         }
 
-        // print new line
         printf("\n");
 
     } while (userChoice != OPTION_EXIT);

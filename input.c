@@ -13,7 +13,7 @@
 #include "file.h"
 #include "common.h"
 
-Player playerAdd(int points)
+Player playerAdd(int tries)
 {
     // Prompt the user for their name
     printf("Ange ditt namn: ");
@@ -30,7 +30,7 @@ Player playerAdd(int points)
     Player player;
     strcpy(player.name, name);
     strcpy(player.date, getCurrentDate());
-    player.points = points;
+    player.points = tries;
 
     // Return the player
     return player;
