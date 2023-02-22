@@ -4,7 +4,7 @@
 #include <stdlib.h>
 
 // header files
-#include "prompt.h"
+#include "Define.h"
 
 int getRandomNumber()
 {

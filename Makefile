@@ -1,5 +1,5 @@
 PROG = main.exe 
-SRC = main.c prompt.c common.c file.h file.c FileData.h Player.h Score.h input.h input.c
+SRC = main.c Define.h prompt.c common.c file.h file.c FileData.h Player.h Score.h input.h input.c
 CFLAGS = -g
 LIBS = 
 

@@ -8,10 +8,6 @@
 #ifndef FILE_H
 #define FILE_H
 
-#define FILE_SCORE "scoreboard.txt"
-
-#endif /* FILE_H */
-
 // Function: useFile
 // Description: use the file and returns the data
 // Parameters: char filename, char mode
@@ -22,3 +18,5 @@ FileData useFile(char *filename, char *mode);
 // Description: Writes the score to the file
 // Parameters: int write_line, Player player
 void scoreToFile(int write_line, Player player);
+
+#endif /* FILE_H */

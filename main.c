@@ -1,4 +1,7 @@
-// Include header files
+// define file
+#include "Define.h"
+
+// header files
 #include "prompt.h"
 #include "common.h"
 #include "file.h"
@@ -8,11 +11,6 @@
 #include "FileData.h"
 #include "Player.h"
 #include "Score.h"
-
-// Define options
-#define OPTION_PLAY_AGAIN 1
-#define OPTION_EXIT 2
-#define OPTION_VIEW_SCOREBOARD 3
 
 // Function: viewLowScoreboard
 // Description: View low scoreboard
@@ -38,7 +36,6 @@ int playGame()
 {
     // variables
     int randomNumber = getRandomNumber();
-    randomNumber = 50;
     int userGuess = 0;
     int numTries = 0;
     bool isWin = false;

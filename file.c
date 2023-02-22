@@ -8,17 +8,15 @@
 #include <errno.h>
 #include <unistd.h>
 
+// define file
+#include "Define.h"
+
 // struct files
 #include "FileData.h"
 #include "Player.h"
 
 // header files
 #include "file.h"
-
-// define constants
-#define FILENAME_SIZE 1024
-#define MAX_LINE 2048
-#define MAX_LINES 5
 
 void createFileWithEmptyRow(char *filename)
 {

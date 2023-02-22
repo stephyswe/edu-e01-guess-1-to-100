@@ -4,7 +4,8 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
-#define PROMPT_MIN 1
+// define file
+#include "Define.h"
 
 // Function: validateInput
 // Description: Validates input

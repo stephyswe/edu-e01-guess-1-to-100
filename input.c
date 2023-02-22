@@ -2,6 +2,9 @@
 #include <stdbool.h>
 #include <string.h>
 
+// define file
+#include "Define.h"
+
 // struct files
 #include "Score.h"
 #include "FileData.h"
@@ -9,10 +12,6 @@
 // header files
 #include "file.h"
 #include "common.h"
-
-// Define variables
-#define MAX_SCORES 6
-#define MAX_NAME 20
 
 Player playerAdd(int points)
 {
