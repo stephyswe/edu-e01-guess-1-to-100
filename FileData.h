@@ -11,7 +11,7 @@ typedef struct
     FILE *file_ptr;
 
     // File name
-    char file_name[60];
+    char file_name[256];
 } FileData;
 
 #endif

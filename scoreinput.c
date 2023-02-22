@@ -27,13 +27,12 @@ Score scoreCheck(int tries)
 
     // variables
     int number;
-    char line[256];
 
     // loop through file
-    while (fgets(line, sizeof(line), fdata.file_ptr) != NULL)
+    while (fgets(fdata.file_name, sizeof(fdata.file_name), fdata.file_ptr) != NULL)
     {
         // try to get score from string
-        if (sscanf(line, "%*s %*s %*s %d", &number) != 1)
+        if (sscanf(fdata.file_name, "%*s %*s %*s %d", &number) != 1)
         {
             // line doesn't match expected format, skip it
             continue;
