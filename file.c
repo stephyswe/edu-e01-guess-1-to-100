@@ -29,22 +29,17 @@ FileData readFile()
     return fdata;
 }
 
-int createFileWithEmptyRow(char *filename)
+void createFileWithEmptyRow(char *filename)
 {
-    if (access(filename, F_OK) != -1)
-    {
-        return 0;
-    }
-    else
+    if (access(filename, F_OK) == -1)
     {
         FILE *file_ptr = fopen(filename, "w");
         if (file_ptr == NULL)
         {
             printf("Error creating file");
-            return -1;
+            exit(1);
         }
         fclose(file_ptr);
-        return 1;
     }
 }
 
@@ -96,7 +91,7 @@ void scoreToFile(int write_line, Player player)
         // if we've reached the end of the file, stop reading
         if (feof(file) || current_line == 5)
         {
-            // Scenario: Line Empty
+            // Scenario: empty row
             if (current_line == write_line)
             {
                 fputs(newline, temp);
@@ -107,14 +102,14 @@ void scoreToFile(int write_line, Player player)
             keep_reading = false;
         }
 
-        // scenario: write_line is same as current_line
+        // scenario: found row
         else if (current_line == write_line)
         {
             fputs(newline, temp);
             fputs("\n", temp);
             fputs(buffer, temp);
         }
-        // write the line from the original file to the temp file
+        // scenario: same row
         else
             fputs(buffer, temp);
 
