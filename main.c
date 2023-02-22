@@ -20,13 +20,13 @@
 void viewLowScoreboard()
 {
     // Read file
-    FileData fdata = readFile();
+    FileData fdata = readFile(FILE_SCORE);
 
     // Loop through file
-    while (fgets(fdata.file_name, 60, fdata.file_ptr) != NULL)
+    while (fgets(fdata.file_row, 60, fdata.file_ptr) != NULL)
     {
         // Print file row
-        printf("%s", fdata.file_name);
+        printf("%s", fdata.file_row);
     }
 
     // Close file

@@ -154,7 +154,7 @@ main.c
 - void main()
 
 ### struct ###
-- FileData.h - FILE *file_ptr, char file_name[60]
+- FileData.h - FILE *file_ptr, char file_row[256]
 - Score.h - bool isHighScore, int row
 - Player.h - char date[20], char name[20], int points
 

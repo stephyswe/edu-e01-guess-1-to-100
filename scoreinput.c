@@ -17,7 +17,7 @@ Score scoreCheck(int tries)
     Score score;
 
     // Read file
-    FileData fdata = readFile();
+    FileData fdata = readFile(FILE_SCORE);
 
     // Set score
     score.isHighScore = false; // start as highscore false
@@ -29,10 +29,10 @@ Score scoreCheck(int tries)
     int number;
 
     // loop through file
-    while (fgets(fdata.file_name, sizeof(fdata.file_name), fdata.file_ptr) != NULL)
+    while (fgets(fdata.file_row, sizeof(fdata.file_row), fdata.file_ptr) != NULL)
     {
         // try to get score from string
-        if (sscanf(fdata.file_name, "%*s %*s %*s %d", &number) != 1)
+        if (sscanf(fdata.file_row, "%*s %*s %*s %d", &number) != 1)
         {
             // line doesn't match expected format, skip it
             continue;

@@ -12,10 +12,12 @@
 #include "FileData.h"
 #include "Player.h"
 
+// header files
+#include "file.h"
+
 // define constants
 #define FILENAME_SIZE 1024
 #define MAX_LINE 2048
-#define FILE_SCORE "scoreboard.txt"
 
 void createFileWithEmptyRow(char *filename)
 {
@@ -37,7 +39,22 @@ void createFileWithEmptyRow(char *filename)
     }
 }
 
-FileData readFile()
+FileData readFile(char *filename)
+{
+    // Read file
+    FileData fdata;
+
+    // check if file exists
+    createFileWithEmptyRow(filename);
+
+    // Open file
+    fdata.file_ptr = fopen(filename, "r");
+
+    // Return file data
+    return fdata;
+}
+
+FileData writeFile()
 {
     // Read file
     FileData fdata;
@@ -46,7 +63,7 @@ FileData readFile()
     createFileWithEmptyRow(FILE_SCORE);
 
     // Open file
-    fdata.file_ptr = fopen(FILE_SCORE, "r");
+    fdata.file_ptr = fopen(FILE_SCORE, "w");
 
     // Return file data
     return fdata;
@@ -55,14 +72,12 @@ FileData readFile()
 void scoreToFile(int write_line, Player player)
 {
     // file pointers for the original file and temp file
-    FILE *file, *temp;
+    FILE *temp;
 
     // store the filename and temp filename
-    char filename[FILENAME_SIZE] = FILE_SCORE;
     char temp_filename[FILENAME_SIZE];
 
     // buffer will store each line from the original file
-    char buffer[MAX_LINE];
 
     // newline will store the new line of text to be written to the file
     char newline[MAX_LINE];
@@ -74,14 +89,14 @@ void scoreToFile(int write_line, Player player)
     strcpy(temp_filename, "temp____");
 
     // append the original filename to the temp filename
-    strcat(temp_filename, filename);
+    strcat(temp_filename, FILE_SCORE);
 
     // flush stdin to get the \n char from the last scanf out, otherwise the
     // below fgets will 'fail' as it will immediately encounter a newline
     fflush(stdin);
 
     // open the original file for reading, and the temp file for writing
-    file = fopen(filename, "r");
+    FileData file = readFile(FILE_SCORE);
     temp = fopen(temp_filename, "w");
 
     // we'll keep reading the file so long as keep_reading is true
@@ -93,9 +108,9 @@ void scoreToFile(int write_line, Player player)
     do
     {
         // read the next line of the file into the buffer
-        fgets(buffer, MAX_LINE, file);
+        fgets(file.file_row, MAX_LINE, file.file_ptr);
         // if we've reached the end of the file, stop reading
-        if (feof(file) || current_line == 5)
+        if (feof(file.file_ptr) || current_line == 5)
         {
             // Scenario: empty row
             if (current_line == write_line)
@@ -113,11 +128,11 @@ void scoreToFile(int write_line, Player player)
         {
             fputs(newline, temp);
             fputs("\n", temp);
-            fputs(buffer, temp);
+            fputs(file.file_row, temp);
         }
         // scenario: same row
         else
-            fputs(buffer, temp);
+            fputs(file.file_row, temp);
 
         // increment the current line as we will now be reading the next line
         current_line++;
@@ -125,10 +140,10 @@ void scoreToFile(int write_line, Player player)
     } while (keep_reading);
 
     // close our access to both files as we are done with them
-    fclose(file);
+    fclose(file.file_ptr);
     fclose(temp);
 
     // delete the original file, rename temp file to the original file's name
-    remove(filename);
-    rename(temp_filename, filename);
+    remove(FILE_SCORE);
+    rename(temp_filename, FILE_SCORE);
 }

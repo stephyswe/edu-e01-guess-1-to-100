@@ -4,14 +4,11 @@
 #define FILEDATA_H
 
 // Struct: FileData
-// Description: file pointer and file name
+// Description: file pointer and file row
 typedef struct
 {
-    // File data
     FILE *file_ptr;
-
-    // File name
-    char file_name[256];
+    char file_row[256];
 } FileData;
 
 #endif
