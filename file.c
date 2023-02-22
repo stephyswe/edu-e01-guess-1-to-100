@@ -17,30 +17,39 @@
 #define MAX_LINE 2048
 #define FILE_SCORE "scoreboard.txt"
 
+void createFileWithEmptyRow(char *filename)
+{
+    // check if file exists
+    if (access(filename, F_OK) == -1)
+    {
+        // create file
+        FILE *file_ptr = fopen(filename, "w");
+
+        // check if file is created
+        if (file_ptr == NULL)
+        {
+            printf("Error creating file");
+            exit(1);
+        }
+
+        // close file
+        fclose(file_ptr);
+    }
+}
+
 FileData readFile()
 {
     // Read file
     FileData fdata;
+
+    // check if file exists
+    createFileWithEmptyRow(FILE_SCORE);
 
     // Open file
     fdata.file_ptr = fopen(FILE_SCORE, "r");
 
     // Return file data
     return fdata;
-}
-
-void createFileWithEmptyRow(char *filename)
-{
-    if (access(filename, F_OK) == -1)
-    {
-        FILE *file_ptr = fopen(filename, "w");
-        if (file_ptr == NULL)
-        {
-            printf("Error creating file");
-            exit(1);
-        }
-        fclose(file_ptr);
-    }
 }
 
 void scoreToFile(int write_line, Player player)
@@ -70,9 +79,6 @@ void scoreToFile(int write_line, Player player)
     // flush stdin to get the \n char from the last scanf out, otherwise the
     // below fgets will 'fail' as it will immediately encounter a newline
     fflush(stdin);
-
-    // check if file exists
-    createFileWithEmptyRow(FILE_SCORE);
 
     // open the original file for reading, and the temp file for writing
     file = fopen(filename, "r");
