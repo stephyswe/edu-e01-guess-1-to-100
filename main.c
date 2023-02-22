@@ -38,13 +38,10 @@ void viewLowScoreboard()
 int playGame()
 {
     // variables
-    int number = 0;
-    int guess = 0;
-    int tries = 0;
-    bool win = false;
-
-    // seed random number generator
-    number = getRandomNumber();
+    int randomNumber = getRandomNumber();
+    int userGuess = 0;
+    int numTries = 0;
+    bool isWin = false;
 
     // strings
     char *strIntro = "Gissa ett tal mellan 1 och 100. \n";
@@ -58,33 +55,33 @@ int playGame()
     printf("%s", strIntro);
 
     // while loop to check if guess is correct
-    while (!win)
+    while (!isWin)
     {
-         // increment tries
-        tries++;
+        // increment tries
+        numTries++;
 
         // checks if guess is between 1 and 100 and if it is an integer
-        guess = handlePrompt(strGuess, tries);
+        userGuess = handlePrompt(strGuess, numTries);
 
-        // check if guess is correct
-        if (guess == number)
+        // if guess is higher than number
+        if (userGuess > randomNumber)
+            printf(strLower);
+        // if guess is lower than number
+        else if (userGuess < randomNumber)
+            printf(strHigher);
+        // guess is correct
+        else
         {
             // print correct message
-            printf(strCorrect, tries);
+            printf(strCorrect, numTries);
 
             // set win to true
-            win = true;
+            isWin = true;
         }
-        // check if guess is higher than number
-        else if (guess > number)
-            printf(strLower);
-        // check if guess is lower than number
-        else if (guess < number)
-            printf(strHigher);
     }
 
     // return tries
-    return tries;
+    return numTries;
 }
 
 // Function: playGameScore
