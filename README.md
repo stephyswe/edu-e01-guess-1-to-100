@@ -176,5 +176,4 @@ scoreinput.c
 - void validateInput(char *inputBuffer)
 - bool checkInteger(char *input)
 - bool isWithinRange(int num, int min, int max)
-- int handlePrompt(const char *prompt, int tries)
-- int handleMenuPrompt(const char *prompt)
+- int usePrompt(char *prompt, int max, int tries)
