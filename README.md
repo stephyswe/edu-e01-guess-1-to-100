@@ -172,7 +172,6 @@ playerinput.c
 - Player playerAdd(int points)
 
 scoreinput.c
-- Score scoreAdd(int row)
 - Score scoreCheck(int tries)
 
 ### prompt.c ###
