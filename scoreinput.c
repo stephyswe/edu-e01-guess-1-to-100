@@ -17,7 +17,7 @@ Score scoreCheck(int tries)
     Score score;
 
     // Read file
-    FileData fdata = readFile(FILE_SCORE);
+    FileData fdata = useFile(FILE_SCORE, "r");
 
     // Set score
     score.isHighScore = false; // start as highscore false
