@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdbool.h>
+#include <string.h>
 
 // struct files
 #include "Score.h"
@@ -7,9 +8,34 @@
 
 // header files
 #include "file.h"
+#include "common.h"
 
 // Define variables
 #define MAX_SCORES 6
+#define MAX_NAME 20
+
+Player playerAdd(int points)
+{
+    // Prompt the user for their name
+    printf("Ange ditt namn: ");
+    fflush(stdout);
+
+    // Get the player's name from user input
+    char name[MAX_NAME];
+    fgets(name, sizeof(name), stdin);
+
+    // Remove newline character from input
+    name[strcspn(name, "\n")] = '\0';
+
+    // Create player struct and set its fields
+    Player player;
+    strcpy(player.name, name);
+    strcpy(player.date, getCurrentDate());
+    player.points = points;
+
+    // Return the player
+    return player;
+}
 
 Score scoreCheck(int tries)
 {

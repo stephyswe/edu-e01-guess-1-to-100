@@ -2,8 +2,7 @@
 #include "prompt.h"
 #include "common.h"
 #include "file.h"
-#include "scoreinput.h"
-#include "playerinput.h"
+#include "input.h"
 
 // struct files
 #include "FileData.h"
@@ -14,9 +13,6 @@
 #define OPTION_PLAY_AGAIN 1
 #define OPTION_EXIT 2
 #define OPTION_VIEW_SCOREBOARD 3
-
-#define GAME_MAX 100
-#define MENU_MAX 3
 
 // Function: viewLowScoreboard
 // Description: View low scoreboard
@@ -42,6 +38,7 @@ int playGame()
 {
     // variables
     int randomNumber = getRandomNumber();
+    randomNumber = 50;
     int userGuess = 0;
     int numTries = 0;
     bool isWin = false;

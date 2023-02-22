@@ -3,7 +3,8 @@
 #include <time.h>
 #include <stdlib.h>
 
-#define MAX_NUMBER 100
+// header files
+#include "prompt.h"
 
 int getRandomNumber()
 {
@@ -11,7 +12,8 @@ int getRandomNumber()
     static int initialized = 0;
 
     // Initialize random number generator
-    if (!initialized) {
+    if (!initialized)
+    {
         // Seed random number generator
         srand(time(NULL));
 
@@ -20,7 +22,7 @@ int getRandomNumber()
     }
 
     // Return random number
-    return rand() % MAX_NUMBER + 1;
+    return rand() % GAME_MAX + 1;
 }
 
 char *getCurrentDate()
