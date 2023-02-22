@@ -65,8 +65,8 @@ int handlePrompt(const char *prompt, int tries)
     char inputBuffer[100];
 
     // error messages
-    const char *strErrorDefaultMsg = "Ogiltig inmatning, försök igen\n";
-    const char *strErrorNumberMsg = "Ogiltigt nummer, måste vara 1 - 100, försök igen\n";
+    const char *strErrorDefaultMsg = "Felaktig inmatning, försök igen\n";
+    const char *strErrorNumberMsg = "Felaktigt nummer, måste vara 1 - 100, försök igen\n";
 
     while (true)
     {
@@ -105,8 +105,8 @@ int handleMenuPrompt(const char *prompt)
     char inputBuffer[100];
 
     // error messages
-    char *strErrorDefaultMsg = "Ogiltig inmatning, försök igen\n";
-    char *strErrorNumberMsg = "Ogiltigt nummer, måste vara 1 - 3, försök igen\n";
+    const char *strErrorDefaultMsg = "Felaktig inmatning, försök igen\n";
+    const char *strErrorNumberMsg = "Felaktigt nummer, måste vara 1 - 100, försök igen\n";
 
     while (true)
     {
