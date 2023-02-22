@@ -12,11 +12,11 @@
 
 #endif /* FILE_H */
 
-// Function: readFile
-// Description: Reads the file and returns the data
-// Parameters: char filename
+// Function: useFile
+// Description: use the file and returns the data
+// Parameters: char filename, char mode
 // Returns: FileData file_data
-FileData readFile(char *filename);
+FileData useFile(char *filename, char *mode);
 
 // Function: scoreToFile
 // Description: Writes the score to the file

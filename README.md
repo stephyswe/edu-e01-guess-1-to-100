@@ -115,7 +115,7 @@ playerAdd skapar och returnerar en instans av "Player"-klassen.
 
 ### scoreToFile() ###
 
-scoreToFile anropas med radnummer (write_line) och Player-objekt. Datum, namn och poäng sparas i en "newline"-rad med sprintf(). Scoreboard-filen läser varje rad med fgets() och ökar current_line med 1. Det finns tre scenarion där det nya resultatet sparas i temporär fil. Efter scenarion stängs scoreboard-filen och temporära filen med fclose(). Slutligen tas den nuvarande scoreboard-filen bort med remove() och ersätts av den temporära filen via funktionen rename().
+scoreToFile anropas med radnummer (line_to_write) och Player-objekt. Datum, namn och poäng sparas i en "newline"-rad med snprintf(). Scoreboard-filen läser varje rad med fgets() och ökar current_line med 1. Det finns tre scenarion där det nya resultatet sparas i temporär fil. Efter scenarion stängs scoreboard-filen och temporära filen med fclose(). Slutligen tas den nuvarande scoreboard-filen bort med remove() och ersätts av den temporära filen via funktionen rename().
 
 ---
 
@@ -137,8 +137,6 @@ scoreToFile anropas med radnummer (write_line) och Player-objekt. Datum, namn oc
     Empty row <> en rad med newline, en ny rad
     Same row <> en rad med buffer
     Found row <> en rad med newline, en ny rad, en rad med buffer
-
-
 
 ## Filstruktur ##
 Det finns totalt 15 filer i projektet. 1 scoreboard fil. 3 structs, 2 common, 2 file, 1 main, 4 inputs och 2 prompt.
@@ -163,7 +161,7 @@ main.c
 - char *getCurrentDate()
  
 ### file.c ###
-- FileData readFile()
+- FileData useFile(char *filename, char *mode)
 - void createFileWithEmptyRow(char *filename)
 - void scoreToFile(int write_line, Player player)
 

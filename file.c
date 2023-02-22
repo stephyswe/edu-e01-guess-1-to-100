@@ -18,6 +18,7 @@
 // define constants
 #define FILENAME_SIZE 1024
 #define MAX_LINE 2048
+#define MAX_LINES 5
 
 void createFileWithEmptyRow(char *filename)
 {
@@ -39,7 +40,7 @@ void createFileWithEmptyRow(char *filename)
     }
 }
 
-FileData readFile(char *filename)
+FileData useFile(char *filename, char *mode)
 {
     // Read file
     FileData fdata;
@@ -48,28 +49,13 @@ FileData readFile(char *filename)
     createFileWithEmptyRow(filename);
 
     // Open file
-    fdata.file_ptr = fopen(filename, "r");
+    fdata.file_ptr = fopen(filename, mode);
 
     // Return file data
     return fdata;
 }
 
-FileData writeFile(char *filename)
-{
-    // Read file
-    FileData fdata;
-
-    // check if file exists
-    createFileWithEmptyRow(filename);
-
-    // Open file
-    fdata.file_ptr = fopen(filename, "w");
-
-    // Return file data
-    return fdata;
-}
-
-void scoreToFile(int write_line, Player player)
+void scoreToFile(int line_to_write, Player player)
 {
     // store the filename and temp filename
     char temp_filename[FILENAME_SIZE];
@@ -81,13 +67,15 @@ void scoreToFile(int write_line, Player player)
     // ensures that the destination buffer is not overflowed
     snprintf(newline, MAX_LINE, "%s %s %d", player.date, player.name, player.points);
 
+    // create a temporary filename
     // snprintf will write the string "temp____" followed by the filename to
     // ensures that the destination buffer is not overflowed
-    snprintf(temp_filename, FILENAME_SIZE, "temp____%s", FILE_SCORE);
+    time_t t = time(NULL);
+    snprintf(temp_filename, FILENAME_SIZE, "temp_%ld.txt", t);
 
     // open the original file for reading, and the temp file for writing
-    FileData file = readFile(FILE_SCORE);
-    FileData temp = writeFile(temp_filename);
+    FileData file = useFile(FILE_SCORE, "r");
+    FileData temp = useFile(temp_filename, "w");
 
     // keep track of the current line number we are reading from the file
     int current_line = 1;
@@ -96,17 +84,17 @@ void scoreToFile(int write_line, Player player)
     while (fgets(file.file_row, MAX_LINE, file.file_ptr))
     {
         // if we've reached the end of the file or the max number of lines, stop reading
-        if (feof(file.file_ptr) || current_line == 5)
+        if (current_line == MAX_LINES || feof(file.file_ptr))
         {
-            // scenario: empty row - fprintf() allows to write new line on same row
-            if (current_line == write_line)
+            // scenario: empty row
+            if (current_line == line_to_write)
                 fprintf(temp.file_ptr, "%s\n", newline);
             // stop reading
             break;
         }
 
-        // scenario: found row - fprintf() allows to write new line on same row
-        if (current_line == write_line)
+        // scenario: found row
+        if (current_line == line_to_write)
             fprintf(temp.file_ptr, "%s\n%s", newline, file.file_row);
         // scenario: same row
         else
