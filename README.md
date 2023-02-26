@@ -88,11 +88,7 @@ Programmet "Gissa talet" utmanar användaren att gissa ett slumpmässigt valt ta
 ## Programmet ##
 Programmet inleds i main() med två funktioner, där spelet påbörjas genom funktionen 'playScoreGame()', och efter spelet är avslutat visas en meny() med tre alternativ: att spela spelet (1), visa scoreboard (2), eller att avsluta spelet (3). Om användaren väljer att spela spelet igen så startas funktionen 'playScoreGame()' igen. Om användaren väljer att visa scoreboard så visas viewLowScoreboard() och om användaren väljer att avsluta spelet så avslutas programmet.
 
-playScoreGame() omfattar två funktioner: att spela spelet och att spara användarens resultat till en fil. playGame() ansvarar för att lagra användarens gissningsförsök i en variabel 'tries', medan scoreCheck() verifierar om användarens resultat är mindre än det nuvarande resultatet i scoreboard.
-
-om score.isHighScore är sant
-- playerAdd - registrerar användarens resultat som en ny post i Player-objektet
-- scoreToFile() - sätter in användarens resultat på lämplig plats i scoreboard-filen
+playScoreGame() omfattar två funktioner: att spela spelet och att spara användarens resultat till en fil. playGame() ansvarar för att lagra användarens gissningsförsök i en variabel 'tries', medan scoreCheck() verifierar om användarens resultat är mindre än det nuvarande resultatet i scoreboard. Om score.isHighScore är sant, så lägger scoreToFile() till användarens resultat på rätt plats i scoreboard-filen.
 
 ### playGame() ###
 Funktionen playGame genererar ett slumpmässigt nummer med hjälp av getRandomNumber(). handlePrompt() hanterar användarens input och ger ledtrådar om gissningen är för hög eller för låg. Om användaren gissar rätt returneras antalet försök som användes.
@@ -101,7 +97,6 @@ getRandomNumber() - genererar ett slumpmässigt heltal mellan 1 och 100.
 
 handlePrompt() - hanterar användarens inmatning. Om användarens inmatning är ett giltigt heltal mellan 1 och 100 returneras det. Om inmatningen inte är ett giltigt heltal mellan 1 och 100 returneras ett felmeddelande.
 
-
 ### scoreCheck() ###
 scoreCheck kontrollerar scoreboard-filen genom att läsa in den med hjälp av readFile() och iterera igenom varje rad. scoreAdd() funktionen anropas när användarens resultat uppfyller en av följande kriterier:
 (1) Det är mindre än det nuvarande resultatet i scoreboard.
@@ -109,11 +104,9 @@ scoreCheck kontrollerar scoreboard-filen genom att läsa in den med hjälp av re
 
 scoreAdd() - skapar och returnerar ett Score-objekt med vald rad och isHighscore inställd på sant.
 
-
-
 ### scoreToFile() ###
 
-scoreToFile anropas med radnummer (line_to_write) och tries. Först anropas playerAdd(). Datum, namn och poäng sparas i en "newline"-rad med snprintf(). En temporär fil skapas via Datum-objekt. Scoreboard-filen läser varje rad med fgets() och ökar current_line med 1. Det finns tre scenarion där det nya resultatet sparas i temporär fil. Efter scenarion stängs scoreboard-filen och temporära filen med fclose(). Slutligen tas den nuvarande scoreboard-filen bort med remove() och ersätts av den temporära filen via funktionen rename().
+scoreToFile anropar med radnummer (line_to_write) och försök (tries). Först anropas playerAdd(). Datum, namn och poäng sparas i en "newline"-rad med hjälp av snprintf(). En temporär fil skapas via Datum-objekt. Scoreboard-filen läser varje rad med fgets() och ökar current_line med 1. Det finns tre scenarion där det nya resultatet sparas i temporär fil. Efter scenarion stängs scoreboard-filen och temporära filen med fclose(). Slutligen tas den nuvarande scoreboard-filen bort med remove() och ersätts av den temporära filen via funktionen rename().
 
 playerAdd() skapar och returnerar en instans av "Player"-klassen.
  
