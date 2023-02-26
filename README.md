@@ -110,14 +110,11 @@ scoreToFile anropar med radnummer (line_to_write) och försök (tries). Först a
 
 playerAdd() skapar och returnerar en instans av "Player"-klassen.
  
-#### Scenario (1): Om input och output är samma och input är mindre än 5
-- lägg till en ny rad, radbyte & befintlig rad
-
-#### Scenario (2): Annars (om input och output är olika)
-- lägg till befintlig rad 
-
-#### Scenario (3): om input och output är samma och input är mindre än 5
-- lägg till ny rad & radbyte
+| Scenario           | Åtgärd |
+|--------------------|----------------------------------------------------------------|
+| Input === output och input > 5  | Lägg till en ny rad, radbyte & befintlig rad |
+| Input !== output och input > 5 | Lägg till befintlig rad om input och output är olika |
+| Filen är ny, input === output & input > 5 | Lägg till ny rad och radbyte |
 
 ## Filstruktur ##
 Det finns totalt 15 filer i projektet. 1 scoreboard fil. main, define, structs, common, file, input och prompt.
