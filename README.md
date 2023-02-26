@@ -109,37 +109,25 @@ scoreCheck kontrollerar scoreboard-filen genom att läsa in den med hjälp av re
 
 scoreAdd() - skapar och returnerar ett Score-objekt med vald rad och isHighscore inställd på sant.
 
-### playerAdd() ###
 
-playerAdd skapar och returnerar en instans av "Player"-klassen.
 
 ### scoreToFile() ###
 
-scoreToFile anropas med radnummer (line_to_write) och Player-objekt. Datum, namn och poäng sparas i en "newline"-rad med snprintf(). Scoreboard-filen läser varje rad med fgets() och ökar current_line med 1. Det finns tre scenarion där det nya resultatet sparas i temporär fil. Efter scenarion stängs scoreboard-filen och temporära filen med fclose(). Slutligen tas den nuvarande scoreboard-filen bort med remove() och ersätts av den temporära filen via funktionen rename().
+scoreToFile anropas med radnummer (line_to_write) och tries. Först anropas playerAdd(). Datum, namn och poäng sparas i en "newline"-rad med snprintf(). En temporär fil skapas via Datum-objekt. Scoreboard-filen läser varje rad med fgets() och ökar current_line med 1. Det finns tre scenarion där det nya resultatet sparas i temporär fil. Efter scenarion stängs scoreboard-filen och temporära filen med fclose(). Slutligen tas den nuvarande scoreboard-filen bort med remove() och ersätts av den temporära filen via funktionen rename().
 
----
+playerAdd() skapar och returnerar en instans av "Player"-klassen.
+ 
+#### Scenario (1): Om input och output är samma och input är mindre än 5
+- lägg till en ny rad, radbyte & befintlig rad
 
-#### Scenario (1): Om scoreboard-filen inte existerar
-- Skapa filen med createFileWithEmptyRow() 
-- empty row
+#### Scenario (2): Annars (om input och output är olika)
+- lägg till befintlig rad 
 
-#### Scenario (2): Om scoreboard-filen existerar och antalet rader är mindre än 5
-- same row
-- empty row
-
-#### Scenario (3): Om scoreboard-filen existerar, antalet rader är 5 och andra platsen byts ut.
-- same row
-- found row
-- same row
-- same row
-
-
-    Empty row <> en rad med newline, en ny rad
-    Same row <> en rad med buffer
-    Found row <> en rad med newline, en ny rad, en rad med buffer
+#### Scenario (3): om input och output är samma och input är mindre än 5
+- lägg till ny rad & radbyte
 
 ## Filstruktur ##
-Det finns totalt 15 filer i projektet. 1 scoreboard fil. 3 structs, 2 common, 2 file, 1 main, 4 inputs och 2 prompt.
+Det finns totalt 15 filer i projektet. 1 scoreboard fil. main, define, structs, common, file, input och prompt.
 
 ### main ###
 scoreboard.txt
@@ -161,15 +149,12 @@ main.c
 - char *getCurrentDate()
  
 ### file.c ###
-- FileData useFile(char *filename, char *mode)
 - void createFileWithEmptyRow(char *filename)
-- void scoreToFile(int write_line, Player player)
+- FileData useFile(char *filename, *mode)
+- void scoreToFile(int line_to_write, int tries)
 
-### inputs ###
-playerinput.c
-- Player playerAdd(int points)
-
-scoreinput.c
+### input.c ###
+- Player playerAdd(int tries)
 - Score scoreCheck(int tries)
 
 ### prompt.c ###
@@ -177,3 +162,9 @@ scoreinput.c
 - bool checkInteger(char *input)
 - bool isWithinRange(int num, int min, int max)
 - int usePrompt(char *prompt, int max, int tries)
+
+### Define.h ###
+- file
+- input
+- main
+- prompt
